@@ -3,3 +3,5 @@ st-gsheets-connection
 pandas
 plotly
 plotly.express
+pickle
+streamlit-authenticator
