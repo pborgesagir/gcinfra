@@ -134,11 +134,36 @@ st.write("Dados Selecionados:")
 st.dataframe(filtered_df)
 
 
+
+
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 col5, col7 = st.columns(2)
 col6 = st.columns(1)
 col8, col9 = st.columns(2)
+
+
+
+
+# Function to convert currency strings to float
+def currency_to_float(currency):
+    # Remove non-numeric characters and convert to float
+    return float(re.sub(r'[^\d.]', '', currency))
+
+# Convert 'TOTAL BDI (23%)' column to numeric values
+filtered_df['TOTAL BDI (23%)'] = filtered_df['TOTAL BDI (23%)'].apply(currency_to_float)
+
+# Grouping by 'ENTIDADE' and calculating the sum of 'TOTAL BDI (23%)'
+grouped_data = filtered_df.groupby('ENTIDADE')['TOTAL BDI (23%)'].sum().reset_index()
+
+# Creating a bar chart using Plotly Express
+fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)', 
+             title='Sum of TOTAL BDI (23%) Grouped by ENTIDADE',
+             labels={'ENTIDADE': 'Entidade', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig.update_layout(xaxis_title='Entidade', yaxis_title='Sum of BDI')
+
+# Display the chart in col1
+col1.plotly_chart(fig)
 
 
 
