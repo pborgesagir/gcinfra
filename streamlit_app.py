@@ -166,7 +166,7 @@ fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)',
 fig.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
 
 # Display the chart in col1
-col3.plotly_chart(fig)
+st.plotly_chart(fig)
 
 
 
