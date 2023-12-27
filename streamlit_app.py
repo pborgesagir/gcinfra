@@ -138,10 +138,10 @@ st.dataframe(filtered_df)
 
 
 col1, col2 = st.columns(2)
-col3, col4 = st.columns(2)
-col5, col6 = st.columns(2)
-col7, col8 = st.columns(2)
-col9 = st.columns(1)
+col3 = st.columns(1)
+col4, col5 = st.columns(2)
+col6, col7 = st.columns(2)
+col8 = st.columns(1)
 
 
 
