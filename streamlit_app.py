@@ -146,6 +146,8 @@ col8, col9 = st.columns(2)
 
 
 
+
+
 # Function to convert currency strings to float
 def currency_to_float(currency):
     # Remove non-numeric characters and convert to float
@@ -164,7 +166,26 @@ fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)',
 fig.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
 
 # Display the chart in col1
-col1.plotly_chart(fig)
+col3.plotly_chart(fig)
+
+
+
+# Calculate the sum of the "TOTAL BDI (23%)" column
+sum_valor_total = filtered_df["TOTAL BDI (23%)"].sum()
+
+# Format the sum to display as Brazilian Real currency
+formatted_sum = "R${:,.2f}".format(sum_valor_total)
+
+# Display the sum of "TOTAL BDI (23%)" in a metric display
+col1.subheader('Total Valor 💰')
+col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
+
+# Count the number of unique values in the "OS" column
+unique_marcas_count = filtered_df["OS"].nunique()
+
+# Display the count of unique "MARCA" values in a metric display
+col2.subheader('Quantidade de OS 🛠️👷')
+col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 
 
 
