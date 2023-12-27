@@ -13,7 +13,7 @@ url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZL
 st.title("DASHBOARD - GCINFRA AGIR")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-df = conn.read(spreadsheet=url, usecols=list(range(6)))
+df = conn.read(spreadsheet=url, usecols=list(range(7)))
 df = df.sort_values("DATA")
 
 # Convert the "DATA" column to datetime with errors='coerce'
