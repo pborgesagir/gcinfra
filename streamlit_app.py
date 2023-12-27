@@ -125,8 +125,8 @@ if classificacao != "Todos":
 if numero_processo != "Todos":
     filtered_df = filtered_df[filtered_df["CLASSIFICAÇÃO"] == numero_processo]
 
-if categoria != "Todos":
-    filtered_df = filtered_df[filtered_df["CATEGORIA"] == categoria]
+if numero_categoria != "Todos":
+    filtered_df = filtered_df[filtered_df["CATEGORIA"] == numero_categoria]
     
 
 # Display the filtered DataFrame
