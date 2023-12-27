@@ -20,7 +20,7 @@ df["DATA"] = pd.to_datetime(df["DATA"], format='%d/%m/%Y', errors='coerce')
 
 
 # Filter out rows where the date could not be parsed (NaT)
-df = df.dropna(subset=["DATA DE ATRIBUIÇÃO:"])
+df = df.dropna(subset=["DATA"])
 
 # Extract year, month, and quarter
 df["Year"] = df["DATA"].dt.year
