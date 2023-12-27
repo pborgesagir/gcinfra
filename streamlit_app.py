@@ -186,7 +186,7 @@ fig_classificacao_pie = px.pie(grouped_by_classificacao_sum, values='TOTAL BDI (
 fig_classificacao_pie.update_traces(textposition='inside', textinfo='percent+label')
 
 # Display the pie chart in col3
-col3.plotly_chart(fig_classificacao_pie)
+st.plotly_chart(fig_classificacao_pie)
 
 
 
