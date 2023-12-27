@@ -263,7 +263,7 @@ fig_time = px.line(grouped_by_date, x='DATA', y='TOTAL BDI (23%)',
                    labels={'DATA': 'Data', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig_time.update_xaxes(type='date')
 fig_time.update_layout(xaxis_title='Data', yaxis_title='Valor com BDI')
-col9.plotly_chart(fig_time)
+st.plotly_chart(fig_time)
 
 
 
