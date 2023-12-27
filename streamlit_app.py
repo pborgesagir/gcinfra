@@ -79,8 +79,59 @@ numero_categoria = st.sidebar.selectbox("Categoria", categoria)
 
 
 
+
+# Create a sidebar for selecting filters
+month = st.sidebar.selectbox("Mês", unique_year_month)
+quarter = st.sidebar.selectbox("Trimestre", unique_year_quarter)
+semester = st.sidebar.selectbox("Semestre", unique_year_semester)
+year = st.sidebar.selectbox("Ano", unique_year)
+
+
+
+
+# Check if "All" is selected for the "Year-Month" filter
+if month == "Todos":
+    month_filtered = df
+else:
+    month_filtered = df[df["Year-Month"] == month]
+
+# Check if "All" is selected for the "Year-Quarter" filter
+if quarter == "Todos":
+    filtered_df = month_filtered
+else:
+    filtered_df = month_filtered[month_filtered["Year-Quarter"] == quarter]
+
+
+# Check if "All" is selected for the "Year-Quarter" filter
+if semester == "Todos":
+    filtered_df = filtered_df
+else:
+    filtered_df = filtered_df[filtered_df["Year-Semester"] == semester]
+
+
+# Check if "All" is selected for the "Year-Quarter" filter
+if year == "Todos":
+    filtered_df = filtered_df
+else:
+    filtered_df = filtered_df[filtered_df["Year"] == year]
+
+
+
+
+# Apply filters based on user selection
+if classificacao != "Todos":
+    filtered_df = filtered_df[filtered_df["ENTIDADE"] == classificacao]
+
+if numero_processo != "Todos":
+    filtered_df = filtered_df[filtered_df["CLASSIFICAÇÃO"] == numero_processo]
+
+if categoria != "Todos":
+    filtered_df = filtered_df[filtered_df["CATEGORIA"] == categoria]
+    
+
+# Display the filtered DataFrame
 st.write("Dados Selecionados:")
-st.dataframe(df)
+st.dataframe(filtered_df)
 
 
 col1, col2 = st.columns(2)
