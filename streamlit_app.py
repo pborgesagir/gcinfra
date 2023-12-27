@@ -139,9 +139,9 @@ st.dataframe(filtered_df)
 
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
-col5, col7 = st.columns(2)
-col6 = st.columns(1)
-col8, col9 = st.columns(2)
+col5, col6 = st.columns(2)
+col7, col8 = st.columns(2)
+col9 = st.columns(1)
 
 
 
@@ -190,45 +190,50 @@ col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 
 
 
+# Chart in col4: Sum of "TOTAL BDI (23%)" grouped by 'CLASSIFICAÇÃO'
+grouped_by_classificacao = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23%)'].sum().reset_index()
 
+fig_classificacao = px.bar(grouped_by_classificacao, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
+                           title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO',
+                           labels={'CLASSIFICAÇÃO': 'Classificação', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig_classificacao.update_layout(xaxis_title='Classificação', yaxis_title='Valor com BDI')
+col4.plotly_chart(fig_classificacao)
 
-# Grouping by 'ENTIDADE' and calculating the sum of 'TOTAL BDI (23%)'
-grouped_data_entity = filtered_df.groupby('ENTIDADE')['TOTAL BDI (23%)'].sum().reset_index()
+# Chart in col5: Sum of "TOTAL BDI (23%)" grouped by 'CATEGORIA'
+grouped_by_categoria = filtered_df.groupby('CATEGORIA')['TOTAL BDI (23%)'].sum().reset_index()
 
-# Creating a bar chart for ENTIDADE grouped by CLASSIFICAÇÃO in col6
-fig_entity_classification = px.bar(filtered_df, x='ENTIDADE', y='TOTAL BDI (23%)', 
-                                   color='CLASSIFICAÇÃO', barmode='group', 
-                                   title='Soma do valor TOTAL BDI (23%) por ENTIDADE e CLASSIFICAÇÃO',
-                                   labels={'ENTIDADE': 'Entidade', 'TOTAL BDI (23%)': 'Sum of BDI'})
-col6.plotly_chart(fig_entity_classification)
+fig_categoria = px.bar(grouped_by_categoria, x='CATEGORIA', y='TOTAL BDI (23%)',
+                       title='Soma do valor TOTAL BDI (23%) por CATEGORIA',
+                       labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig_categoria.update_layout(xaxis_title='Categoria', yaxis_title='Valor com BDI')
+col5.plotly_chart(fig_categoria)
 
-# Creating a bar chart for ENTIDADE grouped by CATEGORIA in col7
-fig_entity_category = px.bar(filtered_df, x='ENTIDADE', y='TOTAL BDI (23%)', 
-                             color='CATEGORIA', barmode='group', 
-                             title='Soma do valor TOTAL BDI (23%) por ENTIDADE e CATEGORIA',
-                             labels={'ENTIDADE': 'Entidade', 'TOTAL BDI (23%)': 'Sum of BDI'})
-col7.plotly_chart(fig_entity_category)
+# Chart in col6: Sum of "TOTAL BDI (23%)" grouped by 'CLASSIFICAÇÃO' and 'ENTIDADE'
+grouped_by_class_entidade = filtered_df.groupby(['CLASSIFICAÇÃO', 'ENTIDADE'])['TOTAL BDI (23%)'].sum().reset_index()
 
-# Creating a bar chart for CLASSIFICAÇÃO in col4
-grouped_data_classification = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23%)'].sum().reset_index()
-fig_classification = px.bar(grouped_data_classification, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)', 
-                            title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO',
+fig_class_entidade = px.bar(grouped_by_class_entidade, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
+                            color='ENTIDADE',
+                            title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO e ENTIDADE',
                             labels={'CLASSIFICAÇÃO': 'Classificação', 'TOTAL BDI (23%)': 'Sum of BDI'})
-col4.plotly_chart(fig_classification)
+fig_class_entidade.update_layout(xaxis_title='Classificação', yaxis_title='Valor com BDI')
+col6.plotly_chart(fig_class_entidade)
 
-# Creating a bar chart for CATEGORIA in col5
-grouped_data_category = filtered_df.groupby('CATEGORIA')['TOTAL BDI (23%)'].sum().reset_index()
-fig_category = px.bar(grouped_data_category, x='CATEGORIA', y='TOTAL BDI (23%)', 
-                      title='Soma do valor TOTAL BDI (23%) por CATEGORIA',
-                      labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
-col5.plotly_chart(fig_category)
+# Chart in col7: Sum of "TOTAL BDI (23%)" grouped by 'CATEGORIA' and 'ENTIDADE'
+grouped_by_cat_entidade = filtered_df.groupby(['CATEGORIA', 'ENTIDADE'])['TOTAL BDI (23%)'].sum().reset_index()
 
-# Line chart for TOTAL BDI (23%) displayed over time in col8
-fig_time_series = px.line(filtered_df, x='TIME_COLUMN', y='TOTAL BDI (23%)', 
-                          title='Valor TOTAL BDI (23%) ao longo do tempo',
-                          labels={'TIME_COLUMN': 'Tempo', 'TOTAL BDI (23%)': 'Sum of BDI'})
-col8.plotly_chart(fig_time_series)
+fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='CATEGORIA', y='TOTAL BDI (23%)',
+                          color='ENTIDADE',
+                          title='Soma do valor TOTAL BDI (23%) por CATEGORIA e ENTIDADE',
+                          labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig_cat_entidade.update_layout(xaxis_title='Categoria', yaxis_title='Valor com BDI')
+col7.plotly_chart(fig_cat_entidade)
 
+# Chart in col8: Line chart summing "TOTAL BDI (23%)" over time
+grouped_by_date = filtered_df.groupby('DATA')['TOTAL BDI (23%)'].sum().reset_index()
 
-
-
+fig_time = px.line(grouped_by_date, x='DATA', y='TOTAL BDI (23%)',
+                   title='Soma do valor TOTAL BDI (23%) ao longo do tempo',
+                   labels={'DATA': 'Data', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig_time.update_xaxes(type='date')
+fig_time.update_layout(xaxis_title='Data', yaxis_title='Valor com BDI')
+col8.plotly_chart(fig_time)
