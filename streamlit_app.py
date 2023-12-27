@@ -65,8 +65,8 @@ unique_year.insert(0, "Todos")
 desired_classificacao = df["ENTIDADE"].unique().tolist()
 desired_classificacao.insert(0, "Todos")
 
-# Create a filter for selecting multiple "UNIDADE" values
-classificacao = st.sidebar.multiselect("Unidade", desired_classificacao, default=desired_classificacao)
+# Create a filter for selecting "ENTIDADE"
+classificacao = st.sidebar.selectbox("Entidade", desired_classificacao)
 
 # Define the list of "CLASSIFICAÇÃO" values and add "Todos" as an option
 desired_numero_processo = df["CLASSIFICAÇÃO"].unique().tolist()
