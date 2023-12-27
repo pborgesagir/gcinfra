@@ -127,8 +127,7 @@ else:
 
 # Apply filters based on user selection
 if classificacao != "Todos":
-    filtered_df = filtered_df[filtered_df["ENTIDADE"].isin(classificacao)]
-
+    filtered_df = filtered_df[filtered_df["ENTIDADE"] == classificacao]
 
 if numero_processo != "Todos":
     filtered_df = filtered_df[filtered_df["CLASSIFICAÇÃO"] == numero_processo]
