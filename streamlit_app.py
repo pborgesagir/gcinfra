@@ -192,6 +192,7 @@ col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 
 # Chart in col4: Sum of "TOTAL BDI (23%)" grouped by 'CLASSIFICAÇÃO'
 grouped_by_classificacao = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23%)'].sum().reset_index()
+grouped_by_classificacao = grouped_by_classificacao.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 fig_classificacao = px.bar(grouped_by_classificacao, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
                            title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO',
@@ -201,6 +202,7 @@ col4.plotly_chart(fig_classificacao)
 
 # Chart in col5: Sum of "TOTAL BDI (23%)" grouped by 'CATEGORIA'
 grouped_by_categoria = filtered_df.groupby('CATEGORIA')['TOTAL BDI (23%)'].sum().reset_index()
+grouped_by_categoria = grouped_by_categoria.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 fig_categoria = px.bar(grouped_by_categoria, x='CATEGORIA', y='TOTAL BDI (23%)',
                        title='Soma do valor TOTAL BDI (23%) por CATEGORIA',
@@ -237,3 +239,4 @@ fig_time = px.line(grouped_by_date, x='DATA', y='TOTAL BDI (23%)',
 fig_time.update_xaxes(type='date')
 fig_time.update_layout(xaxis_title='Data', yaxis_title='Valor com BDI')
 col8.plotly_chart(fig_time)
+
