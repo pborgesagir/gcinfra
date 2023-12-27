@@ -153,6 +153,24 @@ col9 = st.columns(1)
 
 
 
+# Calculate the sum of the "TOTAL BDI (23%)" column
+sum_valor_total = filtered_df["TOTAL BDI (23%)"].sum()
+
+# Format the sum to display as Brazilian Real currency
+formatted_sum = "R${:,.2f}".format(sum_valor_total)
+
+# Display the sum of "TOTAL BDI (23%)" in a metric display
+col1.subheader('Total Valor 💰')
+col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
+
+# Count the number of unique values in the "OS" column
+unique_marcas_count = filtered_df["OS"].nunique()
+
+# Display the count of unique "MARCA" values in a metric display
+col2.subheader('Quantidade de OS 🛠️👷')
+col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
+
+
 
 # Function to convert currency strings to float
 def currency_to_float(currency):
@@ -177,6 +195,19 @@ col3.plotly_chart(fig)
 
 
 
+
+# Chart in col4: Sum of "TOTAL BDI (23%)" grouped by 'CLASSIFICAÇÃO'
+grouped_by_classificacao = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23%)'].sum().reset_index()
+grouped_by_classificacao = grouped_by_classificacao.sort_values(by='TOTAL BDI (23%)', ascending=False)
+
+fig_classificacao = px.bar(grouped_by_classificacao, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
+                           title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO',
+                           labels={'CLASSIFICAÇÃO': 'Classificação', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig_classificacao.update_layout(xaxis_title='Classificação', yaxis_title='Valor com BDI')
+col4.plotly_chart(fig_classificacao)
+
+
+
 # Grouping by 'CLASSIFICAÇÃO' and calculating the sum of 'TOTAL BDI (23%)'
 grouped_by_classificacao_sum = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23%)'].sum().reset_index()
 
@@ -191,35 +222,6 @@ col5.plotly_chart(fig_classificacao_pie)
 
 
 
-# Calculate the sum of the "TOTAL BDI (23%)" column
-sum_valor_total = filtered_df["TOTAL BDI (23%)"].sum()
-
-# Format the sum to display as Brazilian Real currency
-formatted_sum = "R${:,.2f}".format(sum_valor_total)
-
-# Display the sum of "TOTAL BDI (23%)" in a metric display
-col1.subheader('Total Valor 💰')
-col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
-
-# Count the number of unique values in the "OS" column
-unique_marcas_count = filtered_df["OS"].nunique()
-
-# Display the count of unique "MARCA" values in a metric display
-col2.subheader('Quantidade de OS 🛠️👷')
-col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
-
-
-
-
-# Chart in col4: Sum of "TOTAL BDI (23%)" grouped by 'CLASSIFICAÇÃO'
-grouped_by_classificacao = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23%)'].sum().reset_index()
-grouped_by_classificacao = grouped_by_classificacao.sort_values(by='TOTAL BDI (23%)', ascending=False)
-
-fig_classificacao = px.bar(grouped_by_classificacao, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
-                           title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO',
-                           labels={'CLASSIFICAÇÃO': 'Classificação', 'TOTAL BDI (23%)': 'Sum of BDI'})
-fig_classificacao.update_layout(xaxis_title='Classificação', yaxis_title='Valor com BDI')
-col4.plotly_chart(fig_classificacao)
 
 # Chart in col5: Sum of "TOTAL BDI (23%)" grouped by 'CATEGORIA'
 grouped_by_categoria = filtered_df.groupby('CATEGORIA')['TOTAL BDI (23%)'].sum().reset_index()
@@ -240,7 +242,7 @@ fig_class_entidade = px.bar(grouped_by_class_entidade, x='CLASSIFICAÇÃO', y='T
                             title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO e ENTIDADE',
                             labels={'CLASSIFICAÇÃO': 'Classificação', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig_class_entidade.update_layout(xaxis_title='Classificação', yaxis_title='Valor com BDI')
-col6.plotly_chart(fig_class_entidade)
+col7.plotly_chart(fig_class_entidade)
 
 # Chart in col7: Sum of "TOTAL BDI (23%)" grouped by 'CATEGORIA' and 'ENTIDADE'
 grouped_by_cat_entidade = filtered_df.groupby(['CATEGORIA', 'ENTIDADE'])['TOTAL BDI (23%)'].sum().reset_index()
