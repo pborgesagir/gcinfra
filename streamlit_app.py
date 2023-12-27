@@ -12,7 +12,7 @@ url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZL
 st.title("DASHBOARD - GCINFRA AGIR")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-df = conn.read(spreadsheet=url, usecols=list(range(5)))
+df = conn.read(spreadsheet=url, usecols=list(range(6)))
 
 st.write("Dados Selecionados:")
 st.dataframe(df)
