@@ -177,6 +177,18 @@ st.plotly_chart(fig)
 
 
 
+# Grouping by 'CLASSIFICAÇÃO' and calculating the sum of 'TOTAL BDI (23%)'
+grouped_by_classificacao_sum = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23%)'].sum().reset_index()
+
+# Creating a pie chart using Plotly Express
+fig_classificacao_pie = px.pie(grouped_by_classificacao_sum, values='TOTAL BDI (23%)', names='CLASSIFICAÇÃO',
+                              title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO')
+fig_classificacao_pie.update_traces(textposition='inside', textinfo='percent+label')
+
+# Display the pie chart in col3
+col3.plotly_chart(fig_classificacao_pie)
+
+
 
 
 # Calculate the sum of the "TOTAL BDI (23%)" column
