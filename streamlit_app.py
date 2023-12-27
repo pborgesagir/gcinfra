@@ -10,40 +10,6 @@ import re
 
 
 
-# Function to authenticate users
-def authenticate(username, password):
-    # Hardcoded username and password (for demo purposes)
-    valid_username = "user"
-    valid_password = "password"
-
-    if username == valid_username and password == valid_password:
-        return True
-    else:
-        return False
-
-# Main function to run the app
-def main():
-    # Page title
-    st.title("Login Page")
-
-    # Input fields for username and password
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-
-    # Login button
-    if st.button("Login"):
-        if authenticate(username, password):
-            # Set a session state to track if the user is logged in
-            st.session_state.logged_in = True
-        else:
-            st.error("Invalid username or password. Please try again.")
-
-    # If the user is logged in, display the dashboard
-    if st.session_state.get("logged_in"):
-
-
-
-
 
 
 
@@ -283,9 +249,4 @@ fig_time.update_layout(xaxis_title='Data', yaxis_title='Valor com BDI')
 st.plotly_chart(fig_time)
 
 
-
-
-# Run the app
-if __name__ == "__main__":
-    main()
 
