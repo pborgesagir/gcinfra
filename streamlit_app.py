@@ -151,18 +151,25 @@ col9 = st.columns(1)
 
 
 
+# Function to convert currency strings to float
+def currency_to_float(currency):
+    if isinstance(currency, str):
+        # Remove non-numeric characters and convert to float
+        return float(re.sub(r'[^\d.]', '', currency))
+    elif isinstance(currency, (int, float)):
+        # If it's already a number, return it as is
+        return float(currency)
+    else:
+        # Handle other types if necessary
+        return None  # You can modify this part based on your specific requirements
 
 
 
-#RESOLVENDO A QUESTAO DO R$ - INICIO
 
 
 
-#RESOLVEN A QUESTAO DO R$ - FIM
-
-
-
-
+# Convert 'TOTAL BDI (23%)' column to numeric values
+filtered_df['TOTAL BDI (23%)'] = filtered_df['TOTAL BDI (23%)'].apply(currency_to_float)
 
 # Calculate the sum of the "TOTAL BDI (23%)" column
 sum_valor_total = filtered_df["TOTAL BDI (23%)"].sum()
@@ -174,6 +181,10 @@ formatted_sum = "R${:,.2f}".format(sum_valor_total)
 col1.subheader('Total Valor 💰')
 col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
 
+
+
+
+
 # Count the number of unique values in the "OS" column
 unique_marcas_count = filtered_df["OS"].nunique()
 
@@ -183,10 +194,7 @@ col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 
 
 
-# Function to convert currency strings to float
-def currency_to_float(currency):
-    # Remove non-numeric characters and convert to float
-    return float(re.sub(r'[^\d.]', '', currency))
+
 
 # Convert 'TOTAL BDI (23%)' column to numeric values
 filtered_df['TOTAL BDI (23%)'] = filtered_df['TOTAL BDI (23%)'].apply(currency_to_float)
@@ -275,6 +283,5 @@ fig_time = px.line(grouped_by_date, x='DATA', y='TOTAL BDI (23%)',
 fig_time.update_xaxes(type='date')
 fig_time.update_layout(xaxis_title='Data', yaxis_title='Valor com BDI')
 st.plotly_chart(fig_time)
-
 
 
