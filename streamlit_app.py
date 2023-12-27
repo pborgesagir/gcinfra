@@ -138,7 +138,7 @@ st.dataframe(filtered_df)
 
 
 col1, col2 = st.columns(2)
-col3 = st.column(1)
+col3 = st.columns(1)
 col4, col5 = st.columns(2)
 col6, col7 = st.columns(2)
 col8 = st.columns(1)
@@ -166,7 +166,7 @@ fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)',
 fig.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
 
 # Display the chart in col1
-col3.plotly_chart(fig)
+st.plotly_chart(fig)
 
 
 
