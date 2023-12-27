@@ -173,7 +173,7 @@ fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)',
 fig.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
 
 # Display the chart in col1
-st.plotly_chart(fig)
+col3.plotly_chart(fig)
 
 
 
@@ -186,7 +186,7 @@ fig_classificacao_pie = px.pie(grouped_by_classificacao_sum, values='TOTAL BDI (
 fig_classificacao_pie.update_traces(textposition='inside', textinfo='percent+label')
 
 # Display the pie chart in col3
-st.plotly_chart(fig_classificacao_pie)
+col5.plotly_chart(fig_classificacao_pie)
 
 
 
@@ -229,7 +229,7 @@ fig_categoria = px.bar(grouped_by_categoria, x='CATEGORIA', y='TOTAL BDI (23%)',
                        title='Soma do valor TOTAL BDI (23%) por CATEGORIA',
                        labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig_categoria.update_layout(xaxis_title='Categoria', yaxis_title='Valor com BDI')
-col5.plotly_chart(fig_categoria)
+col6.plotly_chart(fig_categoria)
 
 # Chart in col6: Sum of "TOTAL BDI (23%)" grouped by 'CLASSIFICAÇÃO' and 'ENTIDADE'
 grouped_by_class_entidade = filtered_df.groupby(['CLASSIFICAÇÃO', 'ENTIDADE'])['TOTAL BDI (23%)'].sum().reset_index()
@@ -251,7 +251,7 @@ fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='CATEGORIA', y='TOTAL BDI (
                           title='Soma do valor TOTAL BDI (23%) por CATEGORIA e ENTIDADE',
                           labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig_cat_entidade.update_layout(xaxis_title='Categoria', yaxis_title='Valor com BDI')
-col7.plotly_chart(fig_cat_entidade)
+col8.plotly_chart(fig_cat_entidade)
 
 # Chart in col8: Line chart summing "TOTAL BDI (23%)" over time
 grouped_by_date = filtered_df.groupby('DATA')['TOTAL BDI (23%)'].sum().reset_index()
@@ -261,7 +261,7 @@ fig_time = px.line(grouped_by_date, x='DATA', y='TOTAL BDI (23%)',
                    labels={'DATA': 'Data', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig_time.update_xaxes(type='date')
 fig_time.update_layout(xaxis_title='Data', yaxis_title='Valor com BDI')
-st.plotly_chart(fig_time)
+col9.plotly_chart(fig_time)
 
 
 
