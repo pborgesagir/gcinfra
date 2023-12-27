@@ -164,6 +164,7 @@ filtered_df['TOTAL BDI (23%)'] = filtered_df['TOTAL BDI (23%)'].apply(currency_t
 
 # Grouping by 'ENTIDADE' and calculating the sum of 'TOTAL BDI (23%)'
 grouped_data = filtered_df.groupby('ENTIDADE')['TOTAL BDI (23%)'].sum().reset_index()
+grouped_data = grouped_data.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 # Creating a bar chart using Plotly Express
 fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)', 
@@ -173,6 +174,8 @@ fig.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
 
 # Display the chart in col1
 st.plotly_chart(fig)
+
+
 
 
 
