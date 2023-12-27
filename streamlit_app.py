@@ -153,6 +153,33 @@ col9 = st.columns(1)
 
 
 
+
+#RESOLVENDO A QUESTAO DO R$ - INICIO
+def convert_to_float(value):
+    # Remove 'R$', spaces, and make a consistent pattern
+    value = value.replace('R$', '').replace(' ', '').replace('.', '')
+
+    # Check if the value has a comma for thousands and dot for cents
+    if ',' in value and '.' not in value:
+        # Replacing comma with dot for consistent float conversion
+        value = value.replace(',', '.')
+    elif '.' in value and ',' not in value:
+        # Replacing dot with comma for consistent float conversion
+        value = value.replace('.', ',')
+
+    # Remove non-numeric characters and convert to float
+    return float(re.sub(r'[^\d.,-]', '', value))
+
+# Apply this function to convert the column to numeric values
+filtered_df['TOTAL BDI (23%)'] = filtered_df['TOTAL BDI (23%)'].apply(convert_to_float)
+
+
+#RESOLVEN A QUESTAO DO R$ - FIM
+
+
+
+
+
 # Calculate the sum of the "TOTAL BDI (23%)" column
 sum_valor_total = filtered_df["TOTAL BDI (23%)"].sum()
 
