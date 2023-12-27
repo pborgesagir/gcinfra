@@ -10,26 +10,6 @@ import re
 
 
 
-# Define a username and password for login
-username = "gcinfra2024"
-password = "Agir@123"
-
-# Create login components
-login_username = st.sidebar.text_input("Usuário")
-login_password = st.sidebar.text_input("Senha", type="password")
-
-# Check if the entered username and password match
-if login_username == username and login_password == password:
-    st.success("Logged in as {}".format(username))
-    
-    # Your Streamlit app code here after successful login
-    
-    # For example, displaying a simple text after login
-    st.write("Welcome to the app! You're logged in.")
-    
-else:
-    if login_username != "" or login_password != "":
-        st.error("Incorrect username or password. Please try again.")
 
 
 
