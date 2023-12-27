@@ -8,12 +8,12 @@ import numpy as np
 
 
 st.set_page_config(layout="wide")
-url = "https://docs.google.com/spreadsheets/d/1CGypJWn35SFD6oYeLmFU1HjMhxJRBpuuVuVeP7y86wo/edit#gid=0"
-st.title("DASHBOARD - PADRONIZAÇÃO AGIR")
+url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZLzySeU2H8PQ/edit#gid=0"
+st.title("DASHBOARD - GCINFRA AGIR")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-df = conn.read(spreadsheet=url, usecols=list(range(22)))
-df1 = conn.read(spreadsheet=url, usecols=list(range(22)))
+df = conn.read(spreadsheet=url, usecols=list(range(5)))
+df1 = conn.read(spreadsheet=url, usecols=list(range(5)))
 df = df.sort_values("DATA DE ATRIBUIÇÃO:")
 
 # Convert the "DATA DE ATRIBUIÇÃO:" column to datetime with errors='coerce'
