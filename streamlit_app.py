@@ -141,7 +141,7 @@ col1, col2, col10 = st.columns(3)
 col3, col4 = st.columns(2)
 col5, col6 = st.columns(2)
 col7, col8 = st.columns(2)
-col9 = st.columns(1)
+col9, col11 = st.columns(2)
 
 
 
@@ -336,7 +336,7 @@ fig_classificacao_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL 
 fig_classificacao_entidade.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
 
 # Display the bar chart
-st.plotly_chart(fig_classificacao_entidade)
+col9.plotly_chart(fig_classificacao_entidade)
 
 
 
@@ -375,7 +375,7 @@ fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Total BDI Sum',
 fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
 # Display the bar chart
-st.plotly_chart(fig_hospital_area)
+col11.plotly_chart(fig_hospital_area)
 
 
 
