@@ -71,7 +71,7 @@ desired_numero_processo = df["CLASSIFICAÇÃO"].unique().tolist()
 desired_numero_processo.insert(0, "Todos")
 
 # Create a filter for selecting "CLASSIFICAÇÃO"
-numero_processo = st.sidebar.multiselect("Classificação", desired_numero_processo, default=desired_numero_processo[0])
+numero_processo = st.sidebar.multiselect("Classe", desired_numero_processo, default=desired_numero_processo[0])
 
 
 # Define the list of "CATEGORIA" values and add "Todos" as an option
@@ -79,7 +79,7 @@ categoria = df["CATEGORIA"].unique().tolist()
 categoria.insert(0, "Todos")
 
 # Create a filter for selecting "CATEGORIA"
-numero_categoria = st.sidebar.multiselect("Categoria", categoria, default=categoria[0])
+numero_categoria = st.sidebar.multiselect("Subclasse", categoria, default=categoria[0])
 
 
 
@@ -172,7 +172,7 @@ sum_valor_total = filtered_df["TOTAL BDI (23%)"].sum()
 formatted_sum = "R${:,.2f}".format(sum_valor_total)
 
 # Display the sum of "TOTAL BDI (23%)" in a metric display
-col1.subheader('Total Valor 💰')
+col1.subheader('Valor Total 💰')
 col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
 
 
@@ -183,7 +183,7 @@ col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
 unique_marcas_count = filtered_df["OS"].nunique()
 
 # Display the count of unique "MARCA" values in a metric display
-col2.subheader('Quantidade da OS 🛠️👷')
+col2.subheader('Quantidade de OS 🛠️👷')
 col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 
 
@@ -210,7 +210,7 @@ grouped_data = grouped_data.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 # Creating a bar chart using Plotly Express
 fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)', 
-             title='Soma do valor TOTAL BDI (23%) por ENTIDADE',
+             title='Valor por UNIDADE',
              labels={'ENTIDADE': 'Entidade', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
 
