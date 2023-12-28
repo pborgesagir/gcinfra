@@ -331,7 +331,7 @@ grouped_by_entidade = grouped_by_entidade.sort_values(by='TOTAL BDI (23%)', asce
 
 # Create a bar chart using Plotly Express
 fig_classificacao_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL BDI (23%)',
-                                    title='VALOR PARA M.O.F e OUTROS POR UNIDADE',
+                                    title='VALOR PARA M.O.F + OUTROS POR UNIDADE',
                                     labels={'ENTIDADE': 'Unidade', 'TOTAL BDI (23%)': 'Soma com BDI'})
 fig_classificacao_entidade.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
