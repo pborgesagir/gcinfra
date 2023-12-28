@@ -135,10 +135,6 @@ if numero_categoria and numero_categoria != ["Todos"]:
 
     
 
-# Display the filtered DataFrame
-st.write("Dados Selecionados:")
-st.dataframe(filtered_df)
-
 
 
 
@@ -341,4 +337,22 @@ fig_classificacao_entidade.update_layout(xaxis_title='Entidade', yaxis_title='Va
 
 # Display the bar chart
 st.plotly_chart(fig_classificacao_entidade)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Display the filtered DataFrame
+st.write("Dados Selecionados:")
+st.dataframe(filtered_df)
+
 
