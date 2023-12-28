@@ -299,7 +299,7 @@ grouped_mof_outros = filtered_mof_outros.groupby('Year-Month')['TOTAL BDI (23%)'
 
 # Creating a scatter plot with lines for the sum, cumulative average, and specific CLASSIFICAÇÃO values
 fig_monthly_trend = px.scatter(grouped_by_month, x='Year-Month', y='TOTAL BDI (23%)', 
-                               title='ACOMPANHAMENTO DO VALOR AO LONGO DO TEMPO',
+                               title='ACOMPANHAMENTO AO LONGO DO TEMPO',
                                labels={'Year-Month': 'Mês', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig_monthly_trend.add_trace(go.Scatter(x=grouped_by_month['Year-Month'], y=grouped_by_month['TOTAL BDI (23%)'],
                                        mode='lines', name='Soma Mensal'))
