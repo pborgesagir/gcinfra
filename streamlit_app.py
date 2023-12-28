@@ -210,7 +210,7 @@ grouped_data = grouped_data.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 # Creating a bar chart using Plotly Express
 fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)', 
-             title='Valor por UNIDADE',
+             title='VALOR POR UNIDADE',
              labels={'ENTIDADE': 'Unidade', 'TOTAL BDI (23%)': 'Valor com BDI'})
 fig.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
@@ -225,7 +225,7 @@ grouped_by_classificacao = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23
 grouped_by_classificacao = grouped_by_classificacao.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 fig_classificacao = px.bar(grouped_by_classificacao, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
-                           title='Valor por CLASSE',
+                           title='VALOR POR CLASSE',
                            labels={'CLASSIFICAÇÃO': 'Classe', 'TOTAL BDI (23%)': 'Valor com BDI'})
 fig_classificacao.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
 col4.plotly_chart(fig_classificacao)
