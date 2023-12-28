@@ -297,18 +297,33 @@ grouped_by_month = filtered_df.groupby('Year-Month')['TOTAL BDI (23%)'].sum().re
 grouped_by_month['Cumulative Sum'] = grouped_by_month['TOTAL BDI (23%)'].cumsum()
 grouped_by_month['Cumulative Average'] = grouped_by_month['Cumulative Sum'] / (grouped_by_month.index + 1)
 
-# Creating a scatter plot with lines for the sum and cumulative average
+# Filtering the DataFrame for CLASSIFICAÇÃO equal to "M.O.F" or "Outros"
+filtered_mof_outros = filtered_df[filtered_df['CLASSIFICAÇÃO'].isin(['M.O.F', 'Outros'])]
+grouped_mof_outros = filtered_mof_outros.groupby('Year-Month')['TOTAL BDI (23%)'].sum().reset_index()
+
+# Creating a scatter plot with lines for the sum, cumulative average, and specific CLASSIFICAÇÃO values
 fig_monthly_trend = px.scatter(grouped_by_month, x='Year-Month', y='TOTAL BDI (23%)', 
-                               title='Valor TOTAL BDI (23%) por mês',
+                               title='Tendência do valor TOTAL BDI (23%) por mês',
                                labels={'Year-Month': 'Mês', 'TOTAL BDI (23%)': 'Sum of BDI'})
 fig_monthly_trend.add_trace(go.Scatter(x=grouped_by_month['Year-Month'], y=grouped_by_month['TOTAL BDI (23%)'],
-                                       mode='lines', name='Valor do Mês'))
+                                       mode='lines', name='Soma Mensal'))
 
 fig_monthly_trend.add_trace(go.Scatter(x=grouped_by_month['Year-Month'], y=grouped_by_month['Cumulative Average'],
                                        mode='lines', name='Média Cumulativa'))
 
+fig_monthly_trend.add_trace(go.Scatter(x=grouped_mof_outros['Year-Month'], y=grouped_mof_outros['TOTAL BDI (23%)'],
+                                       mode='lines', name='Soma M.O.F/Outros'))
+
 fig_monthly_trend.update_layout(xaxis_title='Mês', yaxis_title='Valor com BDI')
 st.plotly_chart(fig_monthly_trend, use_container_width=True)
+
+
+
+
+
+
+
+
 
 
 # Filter the DataFrame for rows where 'CLASSIFICAÇÃO' is 'M.O.F' or 'Outros'
