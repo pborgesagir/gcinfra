@@ -195,6 +195,7 @@ mean_cost_os = "R${:,.2f}".format(mean_cost_os)
 # Display the mean cost of OS in a metric display
 col10.subheader('Custo Médio de OS ➗')
 col10.metric(label='Custo Médio (R$)', value=mean_cost_os, delta=None)
+st.markdown("<br>", unsafe_allow_html=True)
 
 
 
