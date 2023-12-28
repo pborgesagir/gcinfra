@@ -12,6 +12,7 @@ url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZL
 
 # Centered title using HTML tags
 st.markdown("<h1 style='text-align: center;'>DASHBOARD - GCINFRA AGIR</h1>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 conn = st.connection("gsheets", type=GSheetsConnection)
 
