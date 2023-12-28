@@ -309,3 +309,21 @@ fig_monthly_trend.add_trace(go.Scatter(x=grouped_by_month['Year-Month'], y=group
 
 fig_monthly_trend.update_layout(xaxis_title='Mês', yaxis_title='Valor com BDI')
 st.plotly_chart(fig_monthly_trend, use_container_width=True)
+
+
+# Filter the DataFrame for rows where 'CLASSIFICAÇÃO' is 'M.O.F' or 'Outros'
+filtered_classificacao = filtered_df[filtered_df['CLASSIFICAÇÃO'].isin(['M.O.F', 'Outros'])]
+
+# Group by 'ENTIDADE' and calculate the sum of 'TOTAL BDI (23%)'
+grouped_by_entidade = filtered_classificacao.groupby('ENTIDADE')['TOTAL BDI (23%)'].sum().reset_index()
+grouped_by_entidade = grouped_by_entidade.sort_values(by='TOTAL BDI (23%)', ascending=False)
+
+# Create a bar chart using Plotly Express
+fig_classificacao_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL BDI (23%)',
+                                    title='Soma do valor TOTAL BDI (23%) para M.O.F e Outros por ENTIDADE',
+                                    labels={'ENTIDADE': 'Entidade', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig_classificacao_entidade.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
+
+# Display the bar chart
+st.plotly_chart(fig_classificacao_entidade)
+
