@@ -10,10 +10,11 @@ import re
 st.set_page_config(layout="wide")
 url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZLzySeU2H8PQ/edit#gid=0"
 
-# Centered title
-st.title("DASHBOARD - GCINFRA AGIR", text_align='center')
+# Centered title using HTML tags
+st.markdown("<h1 style='text-align: center;'>DASHBOARD - GCINFRA AGIR</h1>", unsafe_allow_html=True)
 
 conn = st.connection("gsheets", type=GSheetsConnection)
+
 
 df = conn.read(spreadsheet=url, usecols=list(range(7)))
 df = df.sort_values("DATA")
