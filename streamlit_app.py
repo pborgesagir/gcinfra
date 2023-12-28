@@ -211,8 +211,8 @@ grouped_data = grouped_data.sort_values(by='TOTAL BDI (23%)', ascending=False)
 # Creating a bar chart using Plotly Express
 fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI (23%)', 
              title='Valor por UNIDADE',
-             labels={'ENTIDADE': 'Entidade', 'TOTAL BDI (23%)': 'Sum of BDI'})
-fig.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
+             labels={'ENTIDADE': 'Unidade', 'TOTAL BDI (23%)': 'Valor com BDI'})
+fig.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
 # Display the chart in col1
 col3.plotly_chart(fig)
