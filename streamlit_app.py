@@ -345,23 +345,29 @@ col9.plotly_chart(fig_classificacao_entidade)
 
 # Define hospital areas
 hospital_areas = {
-    "HUGOL": 1500,  # Area of HUGOL in m^2
-    "HECAD": 750    # Area of HECAD in m^2
+    "HUGOL": 55105,  # Area of HUGOL in m^2
+    "HECAD": 24520,    # Area of HECAD in m^2
+    "CRER": 33275,  # Area of CRER in m^2
+    "HDS": 4257    # Area of HDS in m^2
 }
 
 # Filter the DataFrame for rows corresponding to each hospital
 filtered_hugol = filtered_df[filtered_df['ENTIDADE'] == 'HUGOL']
 filtered_hecad = filtered_df[filtered_df['ENTIDADE'] == 'HECAD']
+filtered_crer = filtered_df[filtered_df['ENTIDADE'] == 'CRER']
+filtered_hds = filtered_df[filtered_df['ENTIDADE'] == 'HDS']
 
 # Calculate the sum of 'TOTAL BDI (23%)' for each hospital
 sum_bdi_hugol = filtered_hugol['TOTAL BDI (23%)'].sum()
 sum_bdi_hecad = filtered_hecad['TOTAL BDI (23%)'].sum()
+sum_bdi_crer = filtered_crer['TOTAL BDI (23%)'].sum()
+sum_bdi_hds = filtered_hds['TOTAL BDI (23%)'].sum()
 
 # Create a bar chart to display the sums against the respective areas
 data = {
-    'Hospital': ['HUGOL', 'HECAD'],
-    'Total BDI Sum': [sum_bdi_hugol, sum_bdi_hecad],
-    'Area (m^2)': [hospital_areas['HUGOL'], hospital_areas['HECAD']]
+    'Hospital': ['HUGOL', 'HECAD', 'CRER', 'HDS'],
+    'Total BDI Sum': [sum_bdi_hugol, sum_bdi_hecad, sum_bdi_crer, sum_bdi_hds],
+    'Area (m^2)': [hospital_areas['HUGOL'], hospital_areas['HECAD'], hospital_areas['CRER'], hospital_areas['HDS']]
 }
 
 # Create a DataFrame from the data
