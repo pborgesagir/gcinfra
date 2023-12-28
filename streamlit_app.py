@@ -8,16 +8,12 @@ import re
 
 st.set_page_config(layout="wide")
 
-# Define the path to the CSV file
-csv_path = r"C:\Users\16144-pedro\Downloads\BD_Classificacao_GCINFRA - BD_GCINFRA (2).csv"
 
+url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZLzySeU2H8PQ/edit#gid=0"
 st.title("DASHBOARD - GCINFRA AGIR")
+conn = st.connection("gsheets", type=GSheetsConnection)
 
-# Read the CSV file using Pandas
-df = pd.read_csv(csv_path)
-
-# Sort the DataFrame by the "DATA" column
-df["DATA"] = pd.to_datetime(df["DATA"], format='%d/%m/%Y', errors='coerce')
+df = conn.read(spreadsheet=url, usecols=list(range(7)))
 df = df.sort_values("DATA")
 
 
