@@ -358,10 +358,10 @@ filtered_crer = filtered_df[filtered_df['ENTIDADE'] == 'CRER']
 filtered_hds = filtered_df[filtered_df['ENTIDADE'] == 'HDS']
 
 # Calculate the sum of 'TOTAL BDI (23%)' for each hospital
-sum_bdi_hugol = filtered_hugol['TOTAL BDI (23%)'].sum()
-sum_bdi_hecad = filtered_hecad['TOTAL BDI (23%)'].sum()
-sum_bdi_crer = filtered_crer['TOTAL BDI (23%)'].sum()
-sum_bdi_hds = filtered_hds['TOTAL BDI (23%)'].sum()
+sum_bdi_hugol = filtered_hugol['TOTAL BDI (23%)'].sum() / 55105
+sum_bdi_hecad = filtered_hecad['TOTAL BDI (23%)'].sum() / 24520
+sum_bdi_crer = filtered_crer['TOTAL BDI (23%)'].sum()  / 33275
+sum_bdi_hds = filtered_hds['TOTAL BDI (23%)'].sum() / 4257
 
 # Create a bar chart to display the sums against the respective areas
 data = {
@@ -376,7 +376,7 @@ hospital_data = pd.DataFrame(data)
 # Create a bar chart using Plotly Express
 fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Total BDI Sum',
                            text='Total BDI Sum', title='VALOR POR ÁREA CONSTRUÍDA',
-                           labels={'Hospital': 'Hospital', 'Total BDI Sum': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
+                           labels={'Hospital': 'Hospital', 'Valor com BDI': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
 
 fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
