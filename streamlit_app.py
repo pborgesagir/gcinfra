@@ -263,9 +263,9 @@ grouped_by_class_entidade = grouped_by_class_entidade.sort_values(by='TOTAL BDI 
 
 fig_class_entidade = px.bar(grouped_by_class_entidade, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
                             color='ENTIDADE',
-                            title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO e ENTIDADE',
+                            title='BENCHMARKING POR CLASSE',
                             labels={'CLASSIFICAÇÃO': 'Classificação', 'TOTAL BDI (23%)': 'Sum of BDI'})
-fig_class_entidade.update_layout(xaxis_title='Classificação', yaxis_title='Valor com BDI')
+fig_class_entidade.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
 col7.plotly_chart(fig_class_entidade)
 
 # Chart in col7: Sum of "TOTAL BDI (23%)" grouped by 'CATEGORIA' and 'ENTIDADE'
@@ -274,9 +274,9 @@ grouped_by_cat_entidade = grouped_by_cat_entidade.sort_values(by='TOTAL BDI (23%
 
 fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='CATEGORIA', y='TOTAL BDI (23%)',
                           color='ENTIDADE',
-                          title='Soma do valor TOTAL BDI (23%) por CATEGORIA e ENTIDADE',
+                          title='BENCHMARKING POR SUBCLASSE',
                           labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
-fig_cat_entidade.update_layout(xaxis_title='Categoria', yaxis_title='Valor com BDI')
+fig_cat_entidade.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
 col8.plotly_chart(fig_cat_entidade)
 
 
@@ -308,7 +308,7 @@ fig_monthly_trend.add_trace(go.Scatter(x=grouped_by_month['Year-Month'], y=group
                                        mode='lines', name='Média Cumulativa'))
 
 fig_monthly_trend.add_trace(go.Scatter(x=grouped_mof_outros['Year-Month'], y=grouped_mof_outros['TOTAL BDI (23%)'],
-                                       mode='lines', name='Soma M.O.F/Outros'))
+                                       mode='lines', name='Soma M.O.F + Outros'))
 
 fig_monthly_trend.update_layout(xaxis_title='Mês', yaxis_title='Valor com BDI')
 st.plotly_chart(fig_monthly_trend, use_container_width=True)
@@ -331,9 +331,9 @@ grouped_by_entidade = grouped_by_entidade.sort_values(by='TOTAL BDI (23%)', asce
 
 # Create a bar chart using Plotly Express
 fig_classificacao_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL BDI (23%)',
-                                    title='Soma do valor TOTAL BDI (23%) para M.O.F e Outros por ENTIDADE',
-                                    labels={'ENTIDADE': 'Entidade', 'TOTAL BDI (23%)': 'Sum of BDI'})
-fig_classificacao_entidade.update_layout(xaxis_title='Entidade', yaxis_title='Valor com BDI')
+                                    title='VALOR PARA M.O.F e Outros por UNIDADE',
+                                    labels={'ENTIDADE': 'Unidade', 'TOTAL BDI (23%)': 'Soma com BDI'})
+fig_classificacao_entidade.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
 # Display the bar chart
 col9.plotly_chart(fig_classificacao_entidade)
@@ -369,7 +369,7 @@ hospital_data = pd.DataFrame(data)
 
 # Create a bar chart using Plotly Express
 fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Total BDI Sum',
-                           text='Total BDI Sum', title='Soma do valor TOTAL BDI (23%) por área do hospital',
+                           text='Total BDI Sum', title='VALORL POR ÁREA CONSTRUÍDA',
                            labels={'Hospital': 'Hospital', 'Total BDI Sum': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
 
 fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
