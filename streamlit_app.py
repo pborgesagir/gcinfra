@@ -374,7 +374,7 @@ data = {
 hospital_data = pd.DataFrame(data)
 
 # Create a bar chart using Plotly Express
-fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Total BDI Sum',
+fig_hospital_area = px.bar(hospital_data, x='Unidade', y='Valor por m^2',
                            text='Total BDI Sum', title='VALOR POR ÁREA CONSTRUÍDA',
                            labels={'Hospital': 'Hospital', 'Valor com BDI': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
 
