@@ -366,7 +366,7 @@ sum_bdi_hds = filtered_hds['TOTAL BDI (23%)'].sum() / 4257
 # Create a bar chart to display the sums against the respective areas
 data = {
     'Hospital': ['HUGOL', 'HECAD', 'CRER', 'HDS'],
-    'Total BDI Sum': [sum_bdi_hugol, sum_bdi_hecad, sum_bdi_crer, sum_bdi_hds],
+    'Valor por m^2': [sum_bdi_hugol, sum_bdi_hecad, sum_bdi_crer, sum_bdi_hds],
     'Area (m^2)': [hospital_areas['HUGOL'], hospital_areas['HECAD'], hospital_areas['CRER'], hospital_areas['HDS']]
 }
 
@@ -376,7 +376,7 @@ hospital_data = pd.DataFrame(data)
 # Create a bar chart using Plotly Express
 fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Total BDI Sum',
                            text='Total BDI Sum', title='VALOR POR ÁREA CONSTRUÍDA',
-                           labels={'Hospital': 'Hospital', 'Valor com BDI': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
+                           labels={'Hospital': 'Hospital', 'Valor por m^2': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
 
 fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
