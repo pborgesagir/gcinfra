@@ -252,8 +252,8 @@ grouped_by_categoria = filtered_df.groupby('CATEGORIA')['TOTAL BDI (23%)'].sum()
 grouped_by_categoria = grouped_by_categoria.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 fig_categoria = px.bar(grouped_by_categoria, x='CATEGORIA', y='TOTAL BDI (23%)',
-                       title='Soma do valor TOTAL BDI (23%) por CATEGORIA',
-                       labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
+                       title='VALOR POR SUBCLASSE',
+                       labels={'CATEGORIA': 'Subclasse', 'TOTAL BDI (23%)': 'Valor com BDI'})
 fig_categoria.update_layout(xaxis_title='Categoria', yaxis_title='Valor com BDI')
 col6.plotly_chart(fig_categoria)
 
@@ -275,7 +275,7 @@ grouped_by_cat_entidade = grouped_by_cat_entidade.sort_values(by='TOTAL BDI (23%
 fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='CATEGORIA', y='TOTAL BDI (23%)',
                           color='ENTIDADE',
                           title='BENCHMARKING POR SUBCLASSE',
-                          labels={'CATEGORIA': 'Categoria', 'TOTAL BDI (23%)': 'Sum of BDI'})
+                          labels={'CATEGORIA': 'Subclasse', 'TOTAL BDI (23%)': 'Valor com BDI'})
 fig_cat_entidade.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
 col8.plotly_chart(fig_cat_entidade)
 
