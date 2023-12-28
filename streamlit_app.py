@@ -173,7 +173,7 @@ formatted_sum = "R${:,.2f}".format(sum_valor_total)
 
 # Display the sum of "TOTAL BDI (23%)" in a metric display
 col1.subheader('Valor Total 💰')
-col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
+col1.metric(label='', value=formatted_sum, delta=None)
 
 
 
@@ -184,7 +184,7 @@ unique_marcas_count = filtered_df["OS"].nunique()
 
 # Display the count of unique "MARCA" values in a metric display
 col2.subheader('Quantidade de OS 🛠️👷')
-col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
+col2.metric(label='', value=unique_marcas_count, delta=None)
 
 
 # Calculate the mean cost of OS and round it to 2 decimal places
@@ -194,7 +194,7 @@ mean_cost_os = "R${:,.2f}".format(mean_cost_os)
 
 # Display the mean cost of OS in a metric display
 col10.subheader('Custo Médio de OS ➗')
-col10.metric(label='Custo Médio (R$)', value=mean_cost_os, delta=None)
+col10.metric(label='', value=mean_cost_os, delta=None)
 st.markdown("<br>", unsafe_allow_html=True)
 
 
