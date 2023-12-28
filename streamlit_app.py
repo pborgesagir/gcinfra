@@ -7,16 +7,12 @@ import plotly.graph_objects as go
 import numpy as np
 import re
 
-
-
-
-
-
-
-
 st.set_page_config(layout="wide")
 url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZLzySeU2H8PQ/edit#gid=0"
-st.title("DASHBOARD - GCINFRA AGIR")
+
+# Centered title
+st.title("DASHBOARD - GCINFRA AGIR", text_align='center')
+
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 df = conn.read(spreadsheet=url, usecols=list(range(7)))
