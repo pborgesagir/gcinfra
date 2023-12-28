@@ -192,19 +192,12 @@ col2.subheader('Quantidade de OS 🛠️👷')
 col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 
 
+# Calculate the mean cost of OS
+mean_cost_os = filtered_df["TOTAL BDI (23%)"].sum() / unique_marcas_count
 
-# Calculate the average "TOTAL BDI (23%)" for each unique "OS"
-avg_os_values = filtered_df.groupby('OS')['TOTAL BDI (23%)'].mean()
-
-# Calculate the average of all "OS"
-overall_avg = avg_os_values.mean()
-
-# Format the average to display as Brazilian Real currency
-formatted_avg = "R${:,.2f}".format(overall_avg)
-
-# Display the overall average in col3 with emojis
-col10.subheader('Média de Valor por OS ➗')
-col10.metric(label='Média Geral (R$)', value=formatted_avg, delta=None)
+# Display the mean cost of OS in a metric display
+col3.subheader('Custo Médio de OS ➗')
+col3.metric(label='Custo Médio (R$)', value=mean_cost_os, delta=None)
 
 
 
