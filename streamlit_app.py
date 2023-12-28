@@ -225,9 +225,9 @@ grouped_by_classificacao = filtered_df.groupby('CLASSIFICAÇÃO')['TOTAL BDI (23
 grouped_by_classificacao = grouped_by_classificacao.sort_values(by='TOTAL BDI (23%)', ascending=False)
 
 fig_classificacao = px.bar(grouped_by_classificacao, x='CLASSIFICAÇÃO', y='TOTAL BDI (23%)',
-                           title='Soma do valor TOTAL BDI (23%) por CLASSIFICAÇÃO',
-                           labels={'CLASSIFICAÇÃO': 'Classificação', 'TOTAL BDI (23%)': 'Sum of BDI'})
-fig_classificacao.update_layout(xaxis_title='Classificação', yaxis_title='Valor com BDI')
+                           title='Valor por CLASSE',
+                           labels={'CLASSIFICAÇÃO': 'Classe', 'TOTAL BDI (23%)': 'Valor com BDI'})
+fig_classificacao.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
 col4.plotly_chart(fig_classificacao)
 
 
