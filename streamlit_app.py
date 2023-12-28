@@ -1,14 +1,20 @@
 import streamlit as st
+from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+from datetime import datetime
 import plotly.express as px
 import plotly.graph_objects as go
-from datetime import datetime
 import numpy as np
 import re
 
+
+
+
+
+
+
+
 st.set_page_config(layout="wide")
-
-
 url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZLzySeU2H8PQ/edit#gid=0"
 st.title("DASHBOARD - GCINFRA AGIR")
 conn = st.connection("gsheets", type=GSheetsConnection)
@@ -16,6 +22,8 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 df = conn.read(spreadsheet=url, usecols=list(range(7)))
 df = df.sort_values("DATA")
 
+# Convert the "DATA" column to datetime with errors='coerce'
+df["DATA"] = pd.to_datetime(df["DATA"], format='%d/%m/%Y', errors='coerce')
 
 
 # Filter out rows where the date could not be parsed (NaT)
@@ -57,14 +65,15 @@ unique_year.insert(0, "Todos")
 desired_classificacao = df["ENTIDADE"].unique().tolist()
 desired_classificacao.insert(0, "Todos")
 
-classificacao = st.sidebar.multiselect("Entidade", desired_classificacao, default=desired_classificacao[0])
+# Create a filter for selecting "ENTIDADE"
+classificacao = st.sidebar.selectbox("Entidade", desired_classificacao)
 
 # Define the list of "CLASSIFICAÇÃO" values and add "Todos" as an option
 desired_numero_processo = df["CLASSIFICAÇÃO"].unique().tolist()
 desired_numero_processo.insert(0, "Todos")
 
 # Create a filter for selecting "CLASSIFICAÇÃO"
-numero_processo = st.sidebar.multiselect("Classificação", desired_numero_processo, default=desired_numero_processo[0])
+numero_processo = st.sidebar.selectbox("Classificação", desired_numero_processo)
 
 
 # Define the list of "CATEGORIA" values and add "Todos" as an option
@@ -72,7 +81,7 @@ categoria = df["CATEGORIA"].unique().tolist()
 categoria.insert(0, "Todos")
 
 # Create a filter for selecting "CATEGORIA"
-numero_categoria = st.sidebar.multiselect("Categoria", categoria, default=categoria[0])
+numero_categoria = st.sidebar.selectbox("Categoria", categoria)
 
 
 
@@ -115,16 +124,16 @@ else:
 
 
 
-if classificacao and classificacao != ["Todos"]:
-    filtered_df = filtered_df[filtered_df["ENTIDADE"].isin(classificacao)]
 
-if numero_processo and numero_processo != ["Todos"]:
-    filtered_df = filtered_df[filtered_df["CLASSIFICAÇÃO"].isin(numero_processo)]
+# Apply filters based on user selection
+if classificacao != "Todos":
+    filtered_df = filtered_df[filtered_df["ENTIDADE"] == classificacao]
 
-if numero_categoria and numero_categoria != ["Todos"]:
-    filtered_df = filtered_df[filtered_df["CATEGORIA"].isin(numero_categoria)]
+if numero_processo != "Todos":
+    filtered_df = filtered_df[filtered_df["CLASSIFICAÇÃO"] == numero_processo]
 
-
+if numero_categoria != "Todos":
+    filtered_df = filtered_df[filtered_df["CATEGORIA"] == numero_categoria]
     
 
 # Display the filtered DataFrame
@@ -265,32 +274,13 @@ fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='CATEGORIA', y='TOTAL BDI (
 fig_cat_entidade.update_layout(xaxis_title='Categoria', yaxis_title='Valor com BDI')
 col8.plotly_chart(fig_cat_entidade)
 
+# Chart in col8: Line chart summing "TOTAL BDI (23%)" over time
+grouped_by_date = filtered_df.groupby('DATA')['TOTAL BDI (23%)'].sum().reset_index()
 
-
-
-
-
-
-
-# Grouping by 'Year-Month' and calculating the sum of 'TOTAL BDI (23%)'
-grouped_by_month = filtered_df.groupby('Year-Month')['TOTAL BDI (23%)'].sum().reset_index()
-
-# Calculating the cumulative sum and average
-grouped_by_month['Cumulative Sum'] = grouped_by_month['TOTAL BDI (23%)'].cumsum()
-grouped_by_month['Cumulative Average'] = grouped_by_month['Cumulative Sum'] / (grouped_by_month.index + 1)
-
-# Creating a scatter plot with lines for the sum and cumulative average
-fig_monthly_trend = px.scatter(grouped_by_month, x='Year-Month', y='TOTAL BDI (23%)', 
-                               title='Valor TOTAL BDI (23%) por mês',
-                               labels={'Year-Month': 'Mês', 'TOTAL BDI (23%)': 'Sum of BDI'})
-fig_monthly_trend.add_trace(go.Scatter(x=grouped_by_month['Year-Month'], y=grouped_by_month['TOTAL BDI (23%)'],
-                                       mode='lines', name='Valor do Mês'))
-
-fig_monthly_trend.add_trace(go.Scatter(x=grouped_by_month['Year-Month'], y=grouped_by_month['Cumulative Average'],
-                                       mode='lines', name='Média Cumulativa'))
-
-fig_monthly_trend.update_layout(xaxis_title='Mês', yaxis_title='Valor com BDI')
-st.plotly_chart(fig_monthly_trend, use_container_width=True)
-
-
+fig_time = px.line(grouped_by_date, x='DATA', y='TOTAL BDI (23%)',
+                   title='Soma do valor TOTAL BDI (23%) ao longo do tempo',
+                   labels={'DATA': 'Data', 'TOTAL BDI (23%)': 'Sum of BDI'})
+fig_time.update_xaxes(type='date')
+fig_time.update_layout(xaxis_title='Data', yaxis_title='Valor com BDI')
+st.plotly_chart(fig_time)
 
