@@ -188,7 +188,7 @@ col1.metric(label='Valor Total (R$)', value=formatted_sum, delta=None)
 unique_marcas_count = filtered_df["OS"].nunique()
 
 # Display the count of unique "MARCA" values in a metric display
-col2.subheader('Quantidade de OS 🛠️👷')
+col2.subheader('Quantidade da OS 🛠️👷')
 col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 
 
