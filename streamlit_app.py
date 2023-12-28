@@ -331,7 +331,7 @@ grouped_by_entidade = grouped_by_entidade.sort_values(by='TOTAL BDI (23%)', asce
 
 # Create a bar chart using Plotly Express
 fig_classificacao_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL BDI (23%)',
-                                    title='VALOR PARA M.O.F e Outros por UNIDADE',
+                                    title='VALOR PARA M.O.F e OUTROS POR UNIDADE',
                                     labels={'ENTIDADE': 'Unidade', 'TOTAL BDI (23%)': 'Soma com BDI'})
 fig_classificacao_entidade.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
@@ -369,7 +369,7 @@ hospital_data = pd.DataFrame(data)
 
 # Create a bar chart using Plotly Express
 fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Total BDI Sum',
-                           text='Total BDI Sum', title='VALORL POR ÁREA CONSTRUÍDA',
+                           text='Total BDI Sum', title='VALOR POR ÁREA CONSTRUÍDA',
                            labels={'Hospital': 'Hospital', 'Total BDI Sum': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
 
 fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
