@@ -142,7 +142,7 @@ st.dataframe(filtered_df)
 
 
 
-col1, col2 = st.columns(2)
+col1, col2, col10 = st.columns(3)
 col3, col4 = st.columns(2)
 col5, col6 = st.columns(2)
 col7, col8 = st.columns(2)
@@ -190,6 +190,21 @@ unique_marcas_count = filtered_df["OS"].nunique()
 # Display the count of unique "MARCA" values in a metric display
 col2.subheader('Quantidade de OS 🛠️👷')
 col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
+
+
+
+# Calculate the average "TOTAL BDI (23%)" for each unique "OS"
+avg_os_values = filtered_df.groupby('OS')['TOTAL BDI (23%)'].mean()
+
+# Calculate the average of all "OS"
+overall_avg = avg_os_values.mean()
+
+# Format the average to display as Brazilian Real currency
+formatted_avg = "R${:,.2f}".format(overall_avg)
+
+# Display the overall average in col3 with emojis
+col10.subheader('Média de Valor por OS ➗')
+col10.metric(label='Média Geral (R$)', value=formatted_avg, delta=None)
 
 
 
