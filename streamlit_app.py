@@ -196,8 +196,8 @@ col2.metric(label='Número de OS', value=unique_marcas_count, delta=None)
 mean_cost_os = filtered_df["TOTAL BDI (23%)"].sum() / unique_marcas_count
 
 # Display the mean cost of OS in a metric display
-col3.subheader('Custo Médio de OS ➗')
-col3.metric(label='Custo Médio (R$)', value=mean_cost_os, delta=None)
+col10.subheader('Custo Médio de OS ➗')
+col10.metric(label='Custo Médio (R$)', value=mean_cost_os, delta=None)
 
 
 
