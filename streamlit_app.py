@@ -343,45 +343,37 @@ col9.plotly_chart(fig_classificacao_entidade)
 
 
 
-# Define hospital areas
-hospital_areas = {
-    "HUGOL": 55105,  # Area of HUGOL in m^2
-    "HECAD": 24520,    # Area of HECAD in m^2
-    "CRER": 33275,  # Area of CRER in m^2
-    "HDS": 4257    # Area of HDS in m^2
-}
 
-# Filter the DataFrame for rows corresponding to each hospital
-filtered_hugol = filtered_df[filtered_df['ENTIDADE'] == 'HUGOL']
-filtered_hecad = filtered_df[filtered_df['ENTIDADE'] == 'HECAD']
-filtered_crer = filtered_df[filtered_df['ENTIDADE'] == 'CRER']
-filtered_hds = filtered_df[filtered_df['ENTIDADE'] == 'HDS']
+# Assuming filtered_df is your DataFrame containing the relevant data
+# Add a 'Month' column if not already present
 
-# Calculate the sum of 'TOTAL BDI (23%)' for each hospital
-sum_bdi_hugol = filtered_hugol['TOTAL BDI (23%)'].sum() / 55105
-sum_bdi_hecad = filtered_hecad['TOTAL BDI (23%)'].sum() / 24520
-sum_bdi_crer = filtered_crer['TOTAL BDI (23%)'].sum()  / 33275
-sum_bdi_hds = filtered_hds['TOTAL BDI (23%)'].sum() / 4257
+# Group by 'ENTIDADE' (hospital) and 'Month', calculate cumulative sum and count of months
+grouped = filtered_df.groupby(['ENTIDADE', 'Month'])['TOTAL BDI (23%)'].agg(['cumsum', 'cumcount'])
 
-# Create a bar chart to display the sums against the respective areas
-data = {
-    'Hospital': ['HUGOL', 'HECAD', 'CRER', 'HDS'],
-    'Valor por m^2': [sum_bdi_hugol, sum_bdi_hecad, sum_bdi_crer, sum_bdi_hds],
-    'Area (m^2)': [hospital_areas['HUGOL'], hospital_areas['HECAD'], hospital_areas['CRER'], hospital_areas['HDS']]
-}
+# Calculate average by dividing cumulative sum by cumulative count
+grouped['avg_bdi'] = grouped['cumsum'] / grouped['cumcount']
 
-# Create a DataFrame from the data
-hospital_data = pd.DataFrame(data)
+# Take the last value of 'avg_bdi' for each hospital to get the final average for each hospital
+final_avg = grouped.groupby('ENTIDADE')['avg_bdi'].last()
+
+# Create a bar chart to display the final averages against the respective areas
+hospital_data = pd.DataFrame({
+    'Hospital': final_avg.index,  # Hospital names
+    'Average Valor por m^2': final_avg.values,  # Final average values
+    'Area (m^2)': [hospital_areas[hospital] for hospital in final_avg.index]  # Corresponding areas
+})
 
 # Create a bar chart using Plotly Express
-fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Valor por m^2',
-                           text='Valor por m^2', title='VALOR POR ÁREA CONSTRUÍDA',
-                           labels={'Hospital': 'Hospital', 'Valor com BDI': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
+fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Average Valor por m^2',
+                           text='Average Valor por m^2', title='AVERAGE VALOR POR ÁREA CONSTRUÍDA',
+                           labels={'Hospital': 'Hospital', 'Average Valor por m^2': 'Gasto promedio por m^2',
+                                   'Area (m^2)': 'Área (m^2)'})
 
 fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
 # Display the bar chart
 col11.plotly_chart(fig_hospital_area)
+
 
 
 
