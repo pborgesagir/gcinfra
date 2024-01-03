@@ -370,10 +370,16 @@ hospital_areas = {
 # Group by 'ENTIDADE' and calculate the total sum of 'TOTAL BDI (23%)' for each hospital
 grouped_by_hospital = filtered_df.groupby('ENTIDADE')['TOTAL BDI (23%)'].sum().reset_index()
 
+# Group by 'ENTIDADE' and 'Year-Month' to count the number of months for each hospital
+months_per_hospital = filtered_df.groupby(['ENTIDADE', 'Year-Month']).size().groupby('ENTIDADE').size().reset_index(name='NumMonths')
+
+# Merge the total sum and number of months per hospital
+grouped_by_hospital = grouped_by_hospital.merge(months_per_hospital, on='ENTIDADE')
+
 # Calculate spending per square meter for each hospital
 for hospital, area in hospital_areas.items():
     mask = grouped_by_hospital['ENTIDADE'] == hospital
-    grouped_by_hospital.loc[mask, 'Spending per m^2'] = grouped_by_hospital[mask]['TOTAL BDI (23%)'] / area
+    grouped_by_hospital.loc[mask, 'Spending per m^2'] = grouped_by_hospital[mask]['TOTAL BDI (23%)'] / (area * grouped_by_hospital[mask]['NumMonths'])
 
 # Create a bar chart to display average spending per square meter for each hospital
 fig_hospital_avg_spending_per_m2 = px.bar(grouped_by_hospital, x='ENTIDADE', y='Spending per m^2',
@@ -383,6 +389,7 @@ fig_hospital_avg_spending_per_m2.update_layout(xaxis_title='Hospital', yaxis_tit
 
 # Display the bar chart
 col11.plotly_chart(fig_hospital_avg_spending_per_m2)
+
 
 
 
