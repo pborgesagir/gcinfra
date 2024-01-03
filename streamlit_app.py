@@ -22,7 +22,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 
 
-#st.sidebar.image('index.png', width=150)
+st.sidebar.image('index.png', width=150)
 
 conn = st.connection("gsheets", type=GSheetsConnection)
 
