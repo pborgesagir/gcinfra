@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import numpy as np
 import re
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title='Análise de Medições - Manutenção Predial', layout='wide', page_icon='🛠️👷')
 url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZLzySeU2H8PQ/edit#gid=0"
 
 # Centered title using HTML tags
