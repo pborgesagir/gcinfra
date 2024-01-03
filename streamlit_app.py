@@ -10,8 +10,14 @@ import re
 st.set_page_config(page_title='Análise de Medições - Manutenção Predial', layout='wide', page_icon=':ambulance:')
 url = "https://docs.google.com/spreadsheets/d/1T3XQSkstsHXBy2DNs24_y92WWNGu7ihZLzySeU2H8PQ/edit#gid=0"
 
+t1, t2 = st.columns((0.07, 1))
+
+t1.image('index.png', width=120)
+t2.title("<h1 style='text-align: center;'>ANÁLISE DE MEDIÇÕES - MANUTENÇÃO PREDIAL</h1>", unsafe_allow_html=True)
+t2.markdown("**Formulário para envio de arquivos:** https://docs.google.com/forms/d/e/1FAIpQLSdv3CkTWlm_DlmIthQkFwAyopnu9lelO-jKjPrTcJ0ZLOXmqQ/viewform", unsafe_allow_html=True)
+
 # Centered title using HTML tags
-st.markdown("<h1 style='text-align: center;'>ANÁLISE DE MEDIÇÕES - MANUTENÇÃO PREDIAL</h1>", unsafe_allow_html=True)
+
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
