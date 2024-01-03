@@ -23,6 +23,8 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 
 st.sidebar.image('index.png', width=150)
+# Creating a hyperlink around the image using HTML
+st.sidebar.markdown("[![image](index.png)](https://www.agirsaude.org.br/)")
 
 conn = st.connection("gsheets", type=GSheetsConnection)
 
