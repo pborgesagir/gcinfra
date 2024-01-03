@@ -395,12 +395,6 @@ col11.plotly_chart(fig_hospital_avg_spending_per_m2)
 
 
 
-link = "https://docs.google.com/forms/d/e/1FAIpQLSdv3CkTWlm_DlmIthQkFwAyopnu9lelO-jKjPrTcJ0ZLOXmqQ/viewform"
-text = "<h2 style='text-align: center; font-size: 18px;'><a href='{}' target='_blank'>Clique aqui para acessar o formulário de envio das planilhas de medições</a></h2>".format(link)
-
-st.markdown(text, unsafe_allow_html=True)
-st.markdown("<br>", unsafe_allow_html=True)
-st.markdown("<br>", unsafe_allow_html=True)
 
 
 
@@ -410,7 +404,13 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.write("Dados Selecionados:")
 st.dataframe(filtered_df)
 
+st.markdown("<br>", unsafe_allow_html=True)
 
+link = "https://docs.google.com/forms/d/e/1FAIpQLSdv3CkTWlm_DlmIthQkFwAyopnu9lelO-jKjPrTcJ0ZLOXmqQ/viewform"
+text = "<h2 style='text-align: center; font-size: 18px;'><a href='{}' target='_blank'>Clique aqui para acessar o formulário de envio das planilhas de medições</a></h2>".format(link)
+
+st.markdown(text, unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 
 
