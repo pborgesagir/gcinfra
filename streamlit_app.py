@@ -20,6 +20,8 @@ st.markdown("<h1 style='text-align: center;'>ANÁLISE DE MEDIÇÕES - MANUTENÇ�
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
+st.sidebar.image('images/index.png', width=120, use_column_width=True)
+
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 
