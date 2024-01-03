@@ -362,47 +362,27 @@ col9.plotly_chart(fig_classificacao_entidade)
 # Define hospital areas
 hospital_areas = {
     "HUGOL": 55105,  # Area of HUGOL in m^2
-    "HECAD": 24520,    # Area of HECAD in m^2
-    "CRER": 33275,  # Area of CRER in m^2
-    "HDS": 4257    # Area of HDS in m^2
+    "HECAD": 24520,  # Area of HECAD in m^2
+    "CRER": 33275,   # Area of CRER in m^2
+    "HDS": 4257      # Area of HDS in m^2
 }
 
-# Filter the DataFrame for rows corresponding to each hospital
-filtered_hugol = filtered_df[filtered_df['ENTIDADE'] == 'HUGOL']
-filtered_hecad = filtered_df[filtered_df['ENTIDADE'] == 'HECAD']
-filtered_crer = filtered_df[filtered_df['ENTIDADE'] == 'CRER']
-filtered_hds = filtered_df[filtered_df['ENTIDADE'] == 'HDS']
+# Group by 'Year-Month' and calculate the sum of 'TOTAL BDI (23%)' for each hospital
+grouped_by_hospital_month = filtered_df.groupby(['ENTIDADE', 'Year-Month'])['TOTAL BDI (23%)'].sum().reset_index()
 
-# Calculate the sum of 'TOTAL BDI (23%)' for each hospital
-sum_bdi_hugol = filtered_hugol['TOTAL BDI (23%)'].sum() / 55105
-sum_bdi_hecad = filtered_hecad['TOTAL BDI (23%)'].sum() / 24520
-sum_bdi_crer = filtered_crer['TOTAL BDI (23%)'].sum()  / 33275
-sum_bdi_hds = filtered_hds['TOTAL BDI (23%)'].sum() / 4257
+# Calculate spending per square meter for each hospital and each month
+for hospital, area in hospital_areas.items():
+    mask = grouped_by_hospital_month['ENTIDADE'] == hospital
+    grouped_by_hospital_month.loc[mask, 'Spending per m^2'] = grouped_by_hospital_month[mask]['TOTAL BDI (23%)'] / area
 
-# Create a bar chart to display the sums against the respective areas
-data = {
-    'Hospital': ['HUGOL', 'HECAD', 'CRER', 'HDS'],
-    'Valor por m^2': [sum_bdi_hugol, sum_bdi_hecad, sum_bdi_crer, sum_bdi_hds],
-    'Area (m^2)': [hospital_areas['HUGOL'], hospital_areas['HECAD'], hospital_areas['CRER'], hospital_areas['HDS']]
-}
+# Create a line chart to display spending per square meter over time for each hospital
+fig_hospital_spending_per_m2 = px.line(grouped_by_hospital_month, x='Year-Month', y='Spending per m^2',
+                                       color='ENTIDADE', title='GASTO POR M^2 AO LONGO DO TEMPO',
+                                       labels={'Year-Month': 'Mês', 'Spending per m^2': 'Gasto por m^2'})
+fig_hospital_spending_per_m2.update_layout(xaxis_title='Mês', yaxis_title='Gasto por m^2')
 
-# Create a DataFrame from the data
-hospital_data = pd.DataFrame(data)
-
-# Create a bar chart using Plotly Express
-fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Valor por m^2',
-                           text='Valor por m^2', title='VALOR POR ÁREA CONSTRUÍDA',
-                           labels={'Hospital': 'Hospital', 'Valor com BDI': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
-
-fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
-
-# Display the bar chart
-col11.plotly_chart(fig_hospital_area)
-
-
-
-
-
+# Display the line chart
+col11.plotly_chart(fig_hospital_spending_per_m2)
 
 
 
