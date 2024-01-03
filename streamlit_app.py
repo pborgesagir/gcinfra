@@ -367,22 +367,23 @@ hospital_areas = {
     "HDS": 4257      # Area of HDS in m^2
 }
 
-# Group by 'Year-Month' and calculate the sum of 'TOTAL BDI (23%)' for each hospital
-grouped_by_hospital_month = filtered_df.groupby(['ENTIDADE', 'Year-Month'])['TOTAL BDI (23%)'].sum().reset_index()
+# Group by 'ENTIDADE' and calculate the total sum of 'TOTAL BDI (23%)' for each hospital
+grouped_by_hospital = filtered_df.groupby('ENTIDADE')['TOTAL BDI (23%)'].sum().reset_index()
 
-# Calculate spending per square meter for each hospital and each month
+# Calculate spending per square meter for each hospital
 for hospital, area in hospital_areas.items():
-    mask = grouped_by_hospital_month['ENTIDADE'] == hospital
-    grouped_by_hospital_month.loc[mask, 'Spending per m^2'] = grouped_by_hospital_month[mask]['TOTAL BDI (23%)'] / area
+    mask = grouped_by_hospital['ENTIDADE'] == hospital
+    grouped_by_hospital.loc[mask, 'Spending per m^2'] = grouped_by_hospital[mask]['TOTAL BDI (23%)'] / area
 
-# Create a line chart to display spending per square meter over time for each hospital
-fig_hospital_spending_per_m2 = px.line(grouped_by_hospital_month, x='Year-Month', y='Spending per m^2',
-                                       color='ENTIDADE', title='GASTO POR M^2 AO LONGO DO TEMPO',
-                                       labels={'Year-Month': 'Mês', 'Spending per m^2': 'Gasto por m^2'})
-fig_hospital_spending_per_m2.update_layout(xaxis_title='Mês', yaxis_title='Gasto por m^2')
+# Create a bar chart to display average spending per square meter for each hospital
+fig_hospital_avg_spending_per_m2 = px.bar(grouped_by_hospital, x='ENTIDADE', y='Spending per m^2',
+                                          title='GASTO MÉDIO POR M^2 PARA CADA HOSPITAL',
+                                          labels={'ENTIDADE': 'Hospital', 'Spending per m^2': 'Gasto médio por m^2'})
+fig_hospital_avg_spending_per_m2.update_layout(xaxis_title='Hospital', yaxis_title='Gasto médio por m^2')
 
-# Display the line chart
-col11.plotly_chart(fig_hospital_spending_per_m2)
+# Display the bar chart
+col11.plotly_chart(fig_hospital_avg_spending_per_m2)
+
 
 
 
