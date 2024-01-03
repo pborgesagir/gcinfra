@@ -55,6 +55,10 @@ df["Year-Month"] = df["DATA"].dt.strftime("%Y-%m")
 # Create a "Year-Quarter" column
 df["Year-Semester"] = df["Year"].astype(str) + "-S" + df["Semester"].astype(str)
 
+# Concatenating 'ENTIDADE' and 'OS' in'df'
+df["ENTIDADE+OS"] = df["ENTIDADE"] + '-' + df["OS"]
+
+
 
 
 # Sort the unique values in ascending order
@@ -192,7 +196,7 @@ col1.metric(label = '', value=formatted_sum, delta=None)
 
 
 # Count the number of unique values in the "OS" column
-unique_marcas_count = filtered_df["OS"].nunique()
+unique_marcas_count = filtered_df["ENTIDADE+OS"].nunique()
 
 # Display the count of unique "MARCA" values in a metric display
 col2.subheader('Quantidade de OS 🛠️👷')
