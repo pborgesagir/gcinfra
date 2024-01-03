@@ -359,45 +359,34 @@ col9.plotly_chart(fig_classificacao_entidade)
 
 
 
-# Define hospital areas
+
+# Your existing hospital_areas dictionary
 hospital_areas = {
     "HUGOL": 55105,  # Area of HUGOL in m^2
-    "HECAD": 24520,    # Area of HECAD in m^2
-    "CRER": 33275,  # Area of CRER in m^2
-    "HDS": 4257    # Area of HDS in m^2
+    "HECAD": 24520,  # Area of HECAD in m^2
+    "CRER": 33275,   # Area of CRER in m^2
+    "HDS": 4257      # Area of HDS in m^2
 }
 
-# Filter the DataFrame for rows corresponding to each hospital
-filtered_hugol = filtered_df[filtered_df['ENTIDADE'] == 'HUGOL']
-filtered_hecad = filtered_df[filtered_df['ENTIDADE'] == 'HECAD']
-filtered_crer = filtered_df[filtered_df['ENTIDADE'] == 'CRER']
-filtered_hds = filtered_df[filtered_df['ENTIDADE'] == 'HDS']
+# Calculate the mean of 'TOTAL BDI (23%)' for each hospital per month
+mean_bdi_per_area = filtered_df.groupby(['ENTIDADE', filtered_df['DATE'].dt.month])['TOTAL BDI (23%)'].mean() / filtered_df.groupby(['ENTIDADE', filtered_df['DATE'].dt.month])['DATE'].count()
 
-# Calculate the sum of 'TOTAL BDI (23%)' for each hospital
-sum_bdi_hugol = filtered_hugol['TOTAL BDI (23%)'].sum() / 55105
-sum_bdi_hecad = filtered_hecad['TOTAL BDI (23%)'].sum() / 24520
-sum_bdi_crer = filtered_crer['TOTAL BDI (23%)'].sum()  / 33275
-sum_bdi_hds = filtered_hds['TOTAL BDI (23%)'].sum() / 4257
+# Resetting index to get a DataFrame
+mean_bdi_per_area = mean_bdi_per_area.reset_index()
 
-# Create a bar chart to display the sums against the respective areas
-data = {
-    'Hospital': ['HUGOL', 'HECAD', 'CRER', 'HDS'],
-    'Valor por m^2': [sum_bdi_hugol, sum_bdi_hecad, sum_bdi_crer, sum_bdi_hds],
-    'Area (m^2)': [hospital_areas['HUGOL'], hospital_areas['HECAD'], hospital_areas['CRER'], hospital_areas['HDS']]
-}
+# Renaming columns for better readability
+mean_bdi_per_area.columns = ['ENTIDADE', 'Month', 'Mean_BDI']
 
-# Create a DataFrame from the data
-hospital_data = pd.DataFrame(data)
+# Create a bar chart to display the mean against the respective areas per month
+fig_hospital_area_mean = px.bar(mean_bdi_per_area, x='ENTIDADE', y='Mean_BDI', color='Month',
+                                title='MEAN VALOR POR ÁREA CONSTRUÍDA',
+                                labels={'ENTIDADE': 'Hospital', 'Mean_BDI': 'Gasto por m^2', 'Month': 'Month'})
 
-# Create a bar chart using Plotly Express
-fig_hospital_area = px.bar(hospital_data, x='Hospital', y='Valor por m^2',
-                           text='Valor por m^2', title='VALOR POR ÁREA CONSTRUÍDA',
-                           labels={'Hospital': 'Hospital', 'Valor com BDI': 'Gasto por m^2', 'Area (m^2)': 'Area (m^2)'})
-
-fig_hospital_area.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+fig_hospital_area_mean.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
 # Display the bar chart
-col11.plotly_chart(fig_hospital_area)
+col11.plotly_chart(fig_hospital_area_mean)
+
 
 
 
