@@ -368,19 +368,16 @@ hospital_areas = {
     "HDS": 4257      # Area of HDS in m^2
 }
 
-# Calculate the mean of 'TOTAL BDI (23%)' for each hospital per month
-mean_bdi_per_area = filtered_df.groupby(['ENTIDADE', filtered_df['DATE'].dt.month])['TOTAL BDI (23%)'].mean() / filtered_df.groupby(['ENTIDADE', filtered_df['DATE'].dt.month])['DATE'].count()
+# Assuming 'DATE' column specifies the month, and it's in a datetime format
+filtered_df['Month'] = filtered_df['DATE'].dt.month
 
-# Resetting index to get a DataFrame
-mean_bdi_per_area = mean_bdi_per_area.reset_index()
-
-# Renaming columns for better readability
-mean_bdi_per_area.columns = ['ENTIDADE', 'Month', 'Mean_BDI']
+# Calculate the mean of 'TOTAL BDI (23%)' for each hospital area per month
+mean_bdi_per_area = filtered_df.groupby(['ENTIDADE', 'Month'])['TOTAL BDI (23%)'].mean().reset_index()
 
 # Create a bar chart to display the mean against the respective areas per month
-fig_hospital_area_mean = px.bar(mean_bdi_per_area, x='ENTIDADE', y='Mean_BDI', color='Month',
+fig_hospital_area_mean = px.bar(mean_bdi_per_area, x='ENTIDADE', y='TOTAL BDI (23%)', color='Month',
                                 title='MEAN VALOR POR ÁREA CONSTRUÍDA',
-                                labels={'ENTIDADE': 'Hospital', 'Mean_BDI': 'Gasto por m^2', 'Month': 'Month'})
+                                labels={'ENTIDADE': 'Hospital', 'TOTAL BDI (23%)': 'Gasto por m^2', 'Month': 'Month'})
 
 fig_hospital_area_mean.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 
