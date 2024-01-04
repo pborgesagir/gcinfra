@@ -383,7 +383,7 @@ for hospital, area in hospital_areas.items():
 
 # Create a bar chart to display average spending per square meter for each hospital
 fig_hospital_avg_spending_per_m2 = px.bar(grouped_by_hospital, x='ENTIDADE', y='Spending per m^2',
-                                          title='GASTO MÉDIO POR M^2 PARA CADA HOSPITAL',
+                                          title='GASTO MÉDIO POR M^2',
                                           labels={'ENTIDADE': 'Hospital', 'Spending per m^2': 'Gasto médio por m^2'})
 fig_hospital_avg_spending_per_m2.update_layout(xaxis_title='Hospital', yaxis_title='Gasto médio por m^2')
 
