@@ -55,8 +55,8 @@ df["Year-Month"] = df["DATA"].dt.strftime("%Y-%m")
 # Create a "Year-Quarter" column
 df["Year-Semester"] = df["Year"].astype(str) + "-S" + df["Semester"].astype(str)
 
-# Concatenating 'ENTIDADE' and 'OS' in'df'
-df["ENTIDADE+OS"] = df["ENTIDADE"] + '-' + df["OS"]
+# Concatenating 'UNIDADE' and 'OS' in'df'
+df["UNIDADE+OS"] = df["UNIDADE"] + '-' + df["OS"]
 
 
 
@@ -76,8 +76,8 @@ unique_year_semester.insert(0, "Todos")
 unique_year.insert(0, "Todos")
 
 
-# Define the list of "ENTIDADE" values and add "Todos" as an option
-desired_CLASSE = df["ENTIDADE"].unique().tolist()
+# Define the list of "UNIDADE" values and add "Todos" as an option
+desired_CLASSE = df["UNIDADE"].unique().tolist()
 desired_CLASSE.insert(0, "Todos")
 
 CLASSE = st.sidebar.multiselect("Unidade", desired_CLASSE, default=desired_CLASSE[0])
@@ -139,7 +139,7 @@ else:
 
 
 if CLASSE and CLASSE != ["Todos"]:
-    filtered_df = filtered_df[filtered_df["ENTIDADE"].isin(CLASSE)]
+    filtered_df = filtered_df[filtered_df["UNIDADE"].isin(CLASSE)]
 
 if numero_processo and numero_processo != ["Todos"]:
     filtered_df = filtered_df[filtered_df["CLASSE"].isin(numero_processo)]
@@ -196,7 +196,7 @@ col1.metric(label = '', value=formatted_sum, delta=None)
 
 
 # Count the number of unique values in the "OS" column
-unique_marcas_count = filtered_df["ENTIDADE+OS"].nunique()
+unique_marcas_count = filtered_df["UNIDADE+OS"].nunique()
 
 # Display the count of unique "MARCA" values in a metric display
 col2.subheader('Quantidade de OS 🛠️👷')
@@ -220,14 +220,14 @@ st.markdown("<br>", unsafe_allow_html=True)
 # Convert 'TOTAL BDI' column to numeric values
 filtered_df['TOTAL BDI'] = filtered_df['TOTAL BDI'].apply(currency_to_float)
 
-# Grouping by 'ENTIDADE' and calculating the sum of 'TOTAL BDI'
-grouped_data = filtered_df.groupby('ENTIDADE')['TOTAL BDI'].sum().reset_index()
+# Grouping by 'UNIDADE' and calculating the sum of 'TOTAL BDI'
+grouped_data = filtered_df.groupby('UNIDADE')['TOTAL BDI'].sum().reset_index()
 grouped_data = grouped_data.sort_values(by='TOTAL BDI', ascending=False)
 
 # Creating a bar chart using Plotly Express
-fig = px.bar(grouped_data, x='ENTIDADE', y='TOTAL BDI', 
+fig = px.bar(grouped_data, x='UNIDADE', y='TOTAL BDI', 
              title='VALOR POR UNIDADE',
-             labels={'ENTIDADE': 'Unidade', 'TOTAL BDI': 'Valor com BDI'})
+             labels={'UNIDADE': 'Unidade', 'TOTAL BDI': 'Valor com BDI'})
 fig.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
 # Display the chart in col1
@@ -273,27 +273,27 @@ fig_SUBCLASSE = px.bar(grouped_by_SUBCLASSE, x='SUBCLASSE', y='TOTAL BDI',
 fig_SUBCLASSE.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
 col6.plotly_chart(fig_SUBCLASSE)
 
-# Chart in col6: Sum of "TOTAL BDI" grouped by 'CLASSE' and 'ENTIDADE'
-grouped_by_class_entidade = filtered_df.groupby(['CLASSE', 'ENTIDADE'])['TOTAL BDI'].sum().reset_index()
-grouped_by_class_entidade = grouped_by_class_entidade.sort_values(by='TOTAL BDI', ascending=False)
+# Chart in col6: Sum of "TOTAL BDI" grouped by 'CLASSE' and 'UNIDADE'
+grouped_by_class_UNIDADE = filtered_df.groupby(['CLASSE', 'UNIDADE'])['TOTAL BDI'].sum().reset_index()
+grouped_by_class_UNIDADE = grouped_by_class_UNIDADE.sort_values(by='TOTAL BDI', ascending=False)
 
-fig_class_entidade = px.bar(grouped_by_class_entidade, x='CLASSE', y='TOTAL BDI',
-                            color='ENTIDADE',
+fig_class_UNIDADE = px.bar(grouped_by_class_UNIDADE, x='CLASSE', y='TOTAL BDI',
+                            color='UNIDADE',
                             title='BENCHMARKING POR CLASSE',
                             labels={'CLASSE': 'CLASSE', 'TOTAL BDI': 'Sum of BDI'})
-fig_class_entidade.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
-col7.plotly_chart(fig_class_entidade)
+fig_class_UNIDADE.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
+col7.plotly_chart(fig_class_UNIDADE)
 
-# Chart in col7: Sum of "TOTAL BDI" grouped by 'SUBCLASSE' and 'ENTIDADE'
-grouped_by_cat_entidade = filtered_df.groupby(['SUBCLASSE', 'ENTIDADE'])['TOTAL BDI'].sum().reset_index()
-grouped_by_cat_entidade = grouped_by_cat_entidade.sort_values(by='TOTAL BDI', ascending=False)
+# Chart in col7: Sum of "TOTAL BDI" grouped by 'SUBCLASSE' and 'UNIDADE'
+grouped_by_cat_UNIDADE = filtered_df.groupby(['SUBCLASSE', 'UNIDADE'])['TOTAL BDI'].sum().reset_index()
+grouped_by_cat_UNIDADE = grouped_by_cat_UNIDADE.sort_values(by='TOTAL BDI', ascending=False)
 
-fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='SUBCLASSE', y='TOTAL BDI',
-                          color='ENTIDADE',
+fig_cat_UNIDADE = px.bar(grouped_by_cat_UNIDADE, x='SUBCLASSE', y='TOTAL BDI',
+                          color='UNIDADE',
                           title='BENCHMARKING POR SUBCLASSE',
                           labels={'SUBCLASSE': 'Subclasse', 'TOTAL BDI': 'Valor com BDI'})
-fig_cat_entidade.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
-col8.plotly_chart(fig_cat_entidade)
+fig_cat_UNIDADE.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
+col8.plotly_chart(fig_cat_UNIDADE)
 
 
 
@@ -341,18 +341,18 @@ st.plotly_chart(fig_monthly_trend, use_container_width=True)
 # Filter the DataFrame for rows where 'CLASSE' is 'M.O.F' or 'Outros'
 filtered_CLASSE = filtered_df[filtered_df['CLASSE'].isin(['M.O.F', 'Outros'])]
 
-# Group by 'ENTIDADE' and calculate the sum of 'TOTAL BDI'
-grouped_by_entidade = filtered_CLASSE.groupby('ENTIDADE')['TOTAL BDI'].sum().reset_index()
-grouped_by_entidade = grouped_by_entidade.sort_values(by='TOTAL BDI', ascending=False)
+# Group by 'UNIDADE' and calculate the sum of 'TOTAL BDI'
+grouped_by_UNIDADE = filtered_CLASSE.groupby('UNIDADE')['TOTAL BDI'].sum().reset_index()
+grouped_by_UNIDADE = grouped_by_UNIDADE.sort_values(by='TOTAL BDI', ascending=False)
 
 # Create a bar chart using Plotly Express
-fig_CLASSE_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL BDI',
+fig_CLASSE_UNIDADE = px.bar(grouped_by_UNIDADE, x='UNIDADE', y='TOTAL BDI',
                                     title='VALOR PARA M.O.F + OUTROS POR UNIDADE',
-                                    labels={'ENTIDADE': 'Unidade', 'TOTAL BDI': 'Soma com BDI'})
-fig_CLASSE_entidade.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
+                                    labels={'UNIDADE': 'Unidade', 'TOTAL BDI': 'Soma com BDI'})
+fig_CLASSE_UNIDADE.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
 # Display the bar chart
-col9.plotly_chart(fig_CLASSE_entidade)
+col9.plotly_chart(fig_CLASSE_UNIDADE)
 
 
 
@@ -367,24 +367,24 @@ hospital_areas = {
     "HDS": 4257      # Area of HDS in m^2
 }
 
-# Group by 'ENTIDADE' and calculate the total sum of 'TOTAL BDI' for each hospital
-grouped_by_hospital = filtered_df.groupby('ENTIDADE')['TOTAL BDI'].sum().reset_index()
+# Group by 'UNIDADE' and calculate the total sum of 'TOTAL BDI' for each hospital
+grouped_by_hospital = filtered_df.groupby('UNIDADE')['TOTAL BDI'].sum().reset_index()
 
-# Group by 'ENTIDADE' and 'Year-Month' to count the number of months for each hospital
-months_per_hospital = filtered_df.groupby(['ENTIDADE', 'Year-Month']).size().groupby('ENTIDADE').size().reset_index(name='NumMonths')
+# Group by 'UNIDADE' and 'Year-Month' to count the number of months for each hospital
+months_per_hospital = filtered_df.groupby(['UNIDADE', 'Year-Month']).size().groupby('UNIDADE').size().reset_index(name='NumMonths')
 
 # Merge the total sum and number of months per hospital
-grouped_by_hospital = grouped_by_hospital.merge(months_per_hospital, on='ENTIDADE')
+grouped_by_hospital = grouped_by_hospital.merge(months_per_hospital, on='UNIDADE')
 
 # Calculate spending per square meter for each hospital
 for hospital, area in hospital_areas.items():
-    mask = grouped_by_hospital['ENTIDADE'] == hospital
+    mask = grouped_by_hospital['UNIDADE'] == hospital
     grouped_by_hospital.loc[mask, 'Spending per m^2'] = grouped_by_hospital[mask]['TOTAL BDI'] / (area * grouped_by_hospital[mask]['NumMonths'])
 
 # Create a bar chart to display average spending per square meter for each hospital
-fig_hospital_avg_spending_per_m2 = px.bar(grouped_by_hospital, x='ENTIDADE', y='Spending per m^2',
+fig_hospital_avg_spending_per_m2 = px.bar(grouped_by_hospital, x='UNIDADE', y='Spending per m^2',
                                           title='GASTO MÉDIO POR M^2',
-                                          labels={'ENTIDADE': 'Hospital', 'Spending per m^2': 'Gasto médio por m^2'})
+                                          labels={'UNIDADE': 'Hospital', 'Spending per m^2': 'Gasto médio por m^2'})
 fig_hospital_avg_spending_per_m2.update_layout(xaxis_title='Hospital', yaxis_title='Gasto médio por m^2')
 
 # Display the bar chart
