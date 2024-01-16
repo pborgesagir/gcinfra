@@ -77,25 +77,25 @@ unique_year.insert(0, "Todos")
 
 
 # Define the list of "ENTIDADE" values and add "Todos" as an option
-desired_classificacao = df["ENTIDADE"].unique().tolist()
-desired_classificacao.insert(0, "Todos")
+desired_CLASSE = df["ENTIDADE"].unique().tolist()
+desired_CLASSE.insert(0, "Todos")
 
-classificacao = st.sidebar.multiselect("Unidade", desired_classificacao, default=desired_classificacao[0])
+CLASSE = st.sidebar.multiselect("Unidade", desired_CLASSE, default=desired_CLASSE[0])
 
-# Define the list of "CLASSIFICACAO" values and add "Todos" as an option
-desired_numero_processo = df["CLASSIFICACAO"].unique().tolist()
+# Define the list of "CLASSE" values and add "Todos" as an option
+desired_numero_processo = df["CLASSE"].unique().tolist()
 desired_numero_processo.insert(0, "Todos")
 
-# Create a filter for selecting "CLASSIFICACAO"
+# Create a filter for selecting "CLASSE"
 numero_processo = st.sidebar.multiselect("Classe", desired_numero_processo, default=desired_numero_processo[0])
 
 
-# Define the list of "CATEGORIA" values and add "Todos" as an option
-categoria = df["CATEGORIA"].unique().tolist()
-categoria.insert(0, "Todos")
+# Define the list of "SUBCLASSE" values and add "Todos" as an option
+SUBCLASSE = df["SUBCLASSE"].unique().tolist()
+SUBCLASSE.insert(0, "Todos")
 
-# Create a filter for selecting "CATEGORIA"
-numero_categoria = st.sidebar.multiselect("Subclasse", categoria, default=categoria[0])
+# Create a filter for selecting "SUBCLASSE"
+numero_SUBCLASSE = st.sidebar.multiselect("Subclasse", SUBCLASSE, default=SUBCLASSE[0])
 
 
 
@@ -138,14 +138,14 @@ else:
 
 
 
-if classificacao and classificacao != ["Todos"]:
-    filtered_df = filtered_df[filtered_df["ENTIDADE"].isin(classificacao)]
+if CLASSE and CLASSE != ["Todos"]:
+    filtered_df = filtered_df[filtered_df["ENTIDADE"].isin(CLASSE)]
 
 if numero_processo and numero_processo != ["Todos"]:
-    filtered_df = filtered_df[filtered_df["CLASSIFICACAO"].isin(numero_processo)]
+    filtered_df = filtered_df[filtered_df["CLASSE"].isin(numero_processo)]
 
-if numero_categoria and numero_categoria != ["Todos"]:
-    filtered_df = filtered_df[filtered_df["CATEGORIA"].isin(numero_categoria)]
+if numero_SUBCLASSE and numero_SUBCLASSE != ["Todos"]:
+    filtered_df = filtered_df[filtered_df["SUBCLASSE"].isin(numero_SUBCLASSE)]
 
 
     
@@ -236,62 +236,62 @@ col3.plotly_chart(fig)
 
 
 
-# Chart in col4: Sum of "TOTAL BDI" grouped by 'CLASSIFICACAO'
-grouped_by_classificacao = filtered_df.groupby('CLASSIFICACAO')['TOTAL BDI'].sum().reset_index()
-grouped_by_classificacao = grouped_by_classificacao.sort_values(by='TOTAL BDI', ascending=False)
+# Chart in col4: Sum of "TOTAL BDI" grouped by 'CLASSE'
+grouped_by_CLASSE = filtered_df.groupby('CLASSE')['TOTAL BDI'].sum().reset_index()
+grouped_by_CLASSE = grouped_by_CLASSE.sort_values(by='TOTAL BDI', ascending=False)
 
-fig_classificacao = px.bar(grouped_by_classificacao, x='CLASSIFICACAO', y='TOTAL BDI',
+fig_CLASSE = px.bar(grouped_by_CLASSE, x='CLASSE', y='TOTAL BDI',
                            title='VALOR POR CLASSE',
-                           labels={'CLASSIFICACAO': 'Classe', 'TOTAL BDI': 'Valor com BDI'})
-fig_classificacao.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
-col4.plotly_chart(fig_classificacao)
+                           labels={'CLASSE': 'Classe', 'TOTAL BDI': 'Valor com BDI'})
+fig_CLASSE.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
+col4.plotly_chart(fig_CLASSE)
 
 
 
-# Grouping by 'CLASSIFICACAO' and calculating the sum of 'TOTAL BDI'
-grouped_by_classificacao_sum = filtered_df.groupby('CLASSIFICACAO')['TOTAL BDI'].sum().reset_index()
+# Grouping by 'CLASSE' and calculating the sum of 'TOTAL BDI'
+grouped_by_CLASSE_sum = filtered_df.groupby('CLASSE')['TOTAL BDI'].sum().reset_index()
 
 # Creating a pie chart using Plotly Express
-fig_classificacao_pie = px.pie(grouped_by_classificacao_sum, values='TOTAL BDI', names='CLASSIFICACAO',
+fig_CLASSE_pie = px.pie(grouped_by_CLASSE_sum, values='TOTAL BDI', names='CLASSE',
                               title='PERCENTUAL POR CLASSE')
-fig_classificacao_pie.update_traces(textposition='inside', textinfo='percent+label')
+fig_CLASSE_pie.update_traces(textposition='inside', textinfo='percent+label')
 
 # Display the pie chart in col3
-col5.plotly_chart(fig_classificacao_pie)
+col5.plotly_chart(fig_CLASSE_pie)
 
 
 
 
 
-# Chart in col5: Sum of "TOTAL BDI" grouped by 'CATEGORIA'
-grouped_by_categoria = filtered_df.groupby('CATEGORIA')['TOTAL BDI'].sum().reset_index()
-grouped_by_categoria = grouped_by_categoria.sort_values(by='TOTAL BDI', ascending=False)
+# Chart in col5: Sum of "TOTAL BDI" grouped by 'SUBCLASSE'
+grouped_by_SUBCLASSE = filtered_df.groupby('SUBCLASSE')['TOTAL BDI'].sum().reset_index()
+grouped_by_SUBCLASSE = grouped_by_SUBCLASSE.sort_values(by='TOTAL BDI', ascending=False)
 
-fig_categoria = px.bar(grouped_by_categoria, x='CATEGORIA', y='TOTAL BDI',
+fig_SUBCLASSE = px.bar(grouped_by_SUBCLASSE, x='SUBCLASSE', y='TOTAL BDI',
                        title='VALOR POR SUBCLASSE',
-                       labels={'CATEGORIA': 'Subclasse', 'TOTAL BDI': 'Valor com BDI'})
-fig_categoria.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
-col6.plotly_chart(fig_categoria)
+                       labels={'SUBCLASSE': 'Subclasse', 'TOTAL BDI': 'Valor com BDI'})
+fig_SUBCLASSE.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
+col6.plotly_chart(fig_SUBCLASSE)
 
-# Chart in col6: Sum of "TOTAL BDI" grouped by 'CLASSIFICACAO' and 'ENTIDADE'
-grouped_by_class_entidade = filtered_df.groupby(['CLASSIFICACAO', 'ENTIDADE'])['TOTAL BDI'].sum().reset_index()
+# Chart in col6: Sum of "TOTAL BDI" grouped by 'CLASSE' and 'ENTIDADE'
+grouped_by_class_entidade = filtered_df.groupby(['CLASSE', 'ENTIDADE'])['TOTAL BDI'].sum().reset_index()
 grouped_by_class_entidade = grouped_by_class_entidade.sort_values(by='TOTAL BDI', ascending=False)
 
-fig_class_entidade = px.bar(grouped_by_class_entidade, x='CLASSIFICACAO', y='TOTAL BDI',
+fig_class_entidade = px.bar(grouped_by_class_entidade, x='CLASSE', y='TOTAL BDI',
                             color='ENTIDADE',
                             title='BENCHMARKING POR CLASSE',
-                            labels={'CLASSIFICACAO': 'CLASSIFICACAO', 'TOTAL BDI': 'Sum of BDI'})
+                            labels={'CLASSE': 'CLASSE', 'TOTAL BDI': 'Sum of BDI'})
 fig_class_entidade.update_layout(xaxis_title='Classe', yaxis_title='Valor com BDI')
 col7.plotly_chart(fig_class_entidade)
 
-# Chart in col7: Sum of "TOTAL BDI" grouped by 'CATEGORIA' and 'ENTIDADE'
-grouped_by_cat_entidade = filtered_df.groupby(['CATEGORIA', 'ENTIDADE'])['TOTAL BDI'].sum().reset_index()
+# Chart in col7: Sum of "TOTAL BDI" grouped by 'SUBCLASSE' and 'ENTIDADE'
+grouped_by_cat_entidade = filtered_df.groupby(['SUBCLASSE', 'ENTIDADE'])['TOTAL BDI'].sum().reset_index()
 grouped_by_cat_entidade = grouped_by_cat_entidade.sort_values(by='TOTAL BDI', ascending=False)
 
-fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='CATEGORIA', y='TOTAL BDI',
+fig_cat_entidade = px.bar(grouped_by_cat_entidade, x='SUBCLASSE', y='TOTAL BDI',
                           color='ENTIDADE',
                           title='BENCHMARKING POR SUBCLASSE',
-                          labels={'CATEGORIA': 'Subclasse', 'TOTAL BDI': 'Valor com BDI'})
+                          labels={'SUBCLASSE': 'Subclasse', 'TOTAL BDI': 'Valor com BDI'})
 fig_cat_entidade.update_layout(xaxis_title='Subclasse', yaxis_title='Valor com BDI')
 col8.plotly_chart(fig_cat_entidade)
 
@@ -309,11 +309,11 @@ grouped_by_month = filtered_df.groupby('Year-Month')['TOTAL BDI'].sum().reset_in
 grouped_by_month['Cumulative Sum'] = grouped_by_month['TOTAL BDI'].cumsum()
 grouped_by_month['Cumulative Average'] = grouped_by_month['Cumulative Sum'] / (grouped_by_month.index + 1)
 
-# Filtering the DataFrame for CLASSIFICACAO equal to "M.O.F" or "Outros"
-filtered_mof_outros = filtered_df[filtered_df['CLASSIFICACAO'].isin(['M.O.F', 'Outros'])]
+# Filtering the DataFrame for CLASSE equal to "M.O.F" or "Outros"
+filtered_mof_outros = filtered_df[filtered_df['CLASSE'].isin(['M.O.F', 'Outros'])]
 grouped_mof_outros = filtered_mof_outros.groupby('Year-Month')['TOTAL BDI'].sum().reset_index()
 
-# Creating a scatter plot with lines for the sum, cumulative average, and specific CLASSIFICACAO values
+# Creating a scatter plot with lines for the sum, cumulative average, and specific CLASSE values
 fig_monthly_trend = px.scatter(grouped_by_month, x='Year-Month', y='TOTAL BDI', 
                                title='ACOMPANHAMENTO AO LONGO DO TEMPO',
                                labels={'Year-Month': 'Mês', 'TOTAL BDI': 'Sum of BDI'})
@@ -338,21 +338,21 @@ st.plotly_chart(fig_monthly_trend, use_container_width=True)
 
 
 
-# Filter the DataFrame for rows where 'CLASSIFICACAO' is 'M.O.F' or 'Outros'
-filtered_classificacao = filtered_df[filtered_df['CLASSIFICACAO'].isin(['M.O.F', 'Outros'])]
+# Filter the DataFrame for rows where 'CLASSE' is 'M.O.F' or 'Outros'
+filtered_CLASSE = filtered_df[filtered_df['CLASSE'].isin(['M.O.F', 'Outros'])]
 
 # Group by 'ENTIDADE' and calculate the sum of 'TOTAL BDI'
-grouped_by_entidade = filtered_classificacao.groupby('ENTIDADE')['TOTAL BDI'].sum().reset_index()
+grouped_by_entidade = filtered_CLASSE.groupby('ENTIDADE')['TOTAL BDI'].sum().reset_index()
 grouped_by_entidade = grouped_by_entidade.sort_values(by='TOTAL BDI', ascending=False)
 
 # Create a bar chart using Plotly Express
-fig_classificacao_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL BDI',
+fig_CLASSE_entidade = px.bar(grouped_by_entidade, x='ENTIDADE', y='TOTAL BDI',
                                     title='VALOR PARA M.O.F + OUTROS POR UNIDADE',
                                     labels={'ENTIDADE': 'Unidade', 'TOTAL BDI': 'Soma com BDI'})
-fig_classificacao_entidade.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
+fig_CLASSE_entidade.update_layout(xaxis_title='Unidade', yaxis_title='Valor com BDI')
 
 # Display the bar chart
-col9.plotly_chart(fig_classificacao_entidade)
+col9.plotly_chart(fig_CLASSE_entidade)
 
 
 
