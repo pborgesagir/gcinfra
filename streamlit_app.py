@@ -391,6 +391,44 @@ fig_hospital_avg_spending_per_m2.update_layout(xaxis_title='Hospital', yaxis_tit
 col11.plotly_chart(fig_hospital_avg_spending_per_m2)
 
 
+#######################  TESTING ADDING SANKEY DIAGRAM
+# Grouping by 'CLASSE', 'SUBCLASSE', and calculating the sum of 'TOTAL BDI'
+grouped_by_class_subclass = filtered_df.groupby(['CLASSE', 'SUBCLASSE'])['TOTAL BDI'].sum().reset_index()
+
+# Create a Sankey diagram using Plotly Express
+fig_sankey = go.Figure(data=[go.Sankey(
+    node=dict(
+        pad=15,
+        thickness=20,
+        line=dict(color="black", width=0.5),
+        label=grouped_by_class_subclass['CLASSE'].unique().tolist() + grouped_by_class_subclass['SUBCLASSE'].unique().tolist()
+    ),
+    link=dict(
+        source=grouped_by_class_subclass['CLASSE'].map(lambda x: np.where(grouped_by_class_subclass['CLASSE'].unique() == x)[0][0]),
+        target=len(grouped_by_class_subclass['CLASSE'].unique()) + grouped_by_class_subclass['SUBCLASSE'].map(lambda x: np.where(grouped_by_class_subclass['SUBCLASSE'].unique() == x)[0][0]),
+        value=grouped_by_class_subclass['TOTAL BDI']
+    )
+)])
+
+# Update the layout of the Sankey diagram
+fig_sankey.update_layout(title_text="Sankey Diagram - Valor por Classe e Subclasse",
+                        font_size=10,
+                        width=800,
+                        height=600)
+
+# Display the Sankey diagram
+st.plotly_chart(fig_sankey, use_container_width=True)
+
+
+######### END OF TESTING
+
+
+
+
+
+
+
+
 
 
 
