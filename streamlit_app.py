@@ -19,7 +19,7 @@ st.set_page_config(
 #testing authentication
 # --- USER AUTHENTICATION ---
 
-names = ["Peter Parker", "Rebecca Miller", "Pedro Borges]
+names = ["Peter Parker", "Rebecca Miller", "Pedro Borges"]
 usernames = ["pparker", "rmiller", "pborges"]
 
 # load hashed passwords
