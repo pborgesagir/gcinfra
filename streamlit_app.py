@@ -18,7 +18,7 @@ st.set_page_config(
 )
 #testing authentication
 # --- USER AUTHENTICATION ---
--- USER AUTHENTICATION ---
+
 names = ["Peter Parker", "Rebecca Miller"]
 usernames = ["pparker", "rmiller"]
 passwords = ["XXX", "XXX"]
