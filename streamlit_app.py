@@ -424,45 +424,36 @@ if authentication_status:
     
     
     #######################  TESTING ADDING SANKEY DIAGRAM
-    # Grouping by 'CLASSE', 'SUBCLASSE', and calculating the sum of 'TOTAL BDI'
+    # Define color palette (adjust to your preference)
+    palette = ["#4c78a8", "#90bcdf", "#c5e1fa", "#f7caf4", "#e082ca"]
+    
+    # Group and calculate sum
     grouped_by_class_subclass = filtered_df.groupby(['CLASSE', 'SUBCLASSE'])['TOTAL BDI'].sum().reset_index()
     
-    # Create a Sankey diagram using Plotly Express
-    fig_sankey = go.Figure(data=[go.Sankey(
-        node=dict(
-            pad=15,
-            thickness=20,
-            line=dict(color="black", width=0.5),
-            label=grouped_by_class_subclass['CLASSE'].unique().tolist() + grouped_by_class_subclass['SUBCLASSE'].unique().tolist()
-        ),
-        link=dict(
-            source=grouped_by_class_subclass['CLASSE'].map(lambda x: np.where(grouped_by_class_subclass['CLASSE'].unique() == x)[0][0]),
-            target=len(grouped_by_class_subclass['CLASSE'].unique()) + grouped_by_class_subclass['SUBCLASSE'].map(lambda x: np.where(grouped_by_class_subclass['SUBCLASSE'].unique() == x)[0][0]),
-            value=grouped_by_class_subclass['TOTAL BDI']
-        )
-    )])
+    # Create Sankey diagram with color mapping
+    fig_sankey = px.sankey(
+        grouped_by_class_subclass,
+        source="CLASSE",
+        target="SUBCLASSE",
+        value="TOTAL BDI",
+        color="CLASSE",  # Map color to source category (CLASSE)
+        opacity=0.8,  # Adjust node opacity for depth effect
+        node_thickness=25,  # Increase node line thickness
+        node_label=dict(text=f"{grouped_by_class_subclass['CLASSE']} ({grouped_by_class_subclass['TOTAL BDI'].sum():.2f})"),  # Show label and total value
+        link_color=palette[grouped_by_class_subclass["CLASSE"].map(lambda x: np.where(grouped_by_class_subclass['CLASSE'].unique() == x)[0][0])],  # Map link color to source category
+        customdata=[grouped_by_class_subclass["CLASSE"], grouped_by_class_subclass["SUBCLASSE"], grouped_by_class_subclass["TOTAL BDI"]],  # Add custom data for hover text
+        hoverinfo="text+customdata",  # Display label and custom data on hover
+        title="Sankey Diagram - Valor por Classe e Subclasse",
+        font_size=10,
+        width=800,
+        height=600,
+    )
     
-    # Update the layout of the Sankey diagram
-    fig_sankey.update_layout(title_text="Diagrama de Sankey - Distribuição Valor Total por Classe e Subclasse",
-                            font_size=10,
-                            width=800,
-                            height=600)
-    
-    # Display the Sankey diagram
+    # Display Sankey diagram
     st.plotly_chart(fig_sankey, use_container_width=True)
-    
+        
     
     ######### END OF TESTING
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
