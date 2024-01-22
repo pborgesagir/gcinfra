@@ -19,8 +19,8 @@ st.set_page_config(
 #testing authentication
 # --- USER AUTHENTICATION ---
 
-names = ["Peter Parker", "Rebecca Miller"]
-usernames = ["pparker", "rmiller"]
+names = ["Peter Parker", "Rebecca Miller", "Pedro Borges]
+usernames = ["pparker", "rmiller", "pborges"]
 
 # load hashed passwords
 file_path = Path(__file__).parent / "hashed_pw.pkl"
