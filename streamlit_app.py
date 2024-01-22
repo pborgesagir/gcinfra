@@ -18,16 +18,21 @@ st.set_page_config(
 )
 #testing authentication
 # --- USER AUTHENTICATION ---
+-- USER AUTHENTICATION ---
 names = ["Peter Parker", "Rebecca Miller"]
 usernames = ["pparker", "rmiller"]
+passwords = ["XXX", "XXX"]
 
-# load hashed passwords
+hashed_passwords = stauth.Hasher(passwords).generate()
+
 file_path = Path(__file__).parent / "hashed_pw.pkl"
-with file_path.open("rb") as file:
-    hashed_passwords = pickle.load(file)
+with file_path.open("wb") as file:
+    pickle.dump(hashed_passwords, file)
 
+# Instantiate Authenticate class with correct usage of cookie_expiry_days
 authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
-    "sales_dashboard", "abcdef", cookie_expiry_days=30)
+                                     "sales_dashboard", "abcdef",
+                                     cookie_expiry_days=30)
 
 name, authentication_status, username = authenticator.login("Login", "main")
 
