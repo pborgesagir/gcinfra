@@ -53,7 +53,7 @@ if authentication_status:
     
     
     st.sidebar.image('index.png', width=150)
-    authenticator.logout("Logout", "sidebar")
+    
     st.sidebar.title(f"Bem-vindo {name}")
     
     
@@ -181,7 +181,7 @@ if authentication_status:
     
     
         
-    
+    authenticator.logout("Logout", "sidebar")
     
     
     
