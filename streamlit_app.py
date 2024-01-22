@@ -443,7 +443,7 @@ if authentication_status:
     )])
     
     # Update the layout of the Sankey diagram
-    fig_sankey.update_layout(title_text="Sankey Diagram - Valor por Classe e Subclasse",
+    fig_sankey.update_layout(title_text="Diagrama de Sankey - Valor por Classe e Subclasse",
                 font_size=10,
                 width=800,
                 height=600)
