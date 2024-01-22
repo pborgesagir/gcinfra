@@ -33,10 +33,10 @@ authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
 name, authentication_status, username = authenticator.login("Login", "main")
 
 if authentication_status == False:
-    st.error("Username/password is incorrect")
+    st.error("Usuário/senha está incorreto")
 
 if authentication_status == None:
-    st.warning("Please enter your username and password")
+    st.warning("Por favor, insira usuário e senha")
 
 if authentication_status:
 
@@ -54,7 +54,7 @@ if authentication_status:
     
     st.sidebar.image('index.png', width=150)
     
-    st.sidebar.title(f"Bem-vindo {name}")
+    st.sidebar.title(f"Bem-vindo, {name}")
     
     
     conn = st.connection("gsheets", type=GSheetsConnection)
