@@ -54,7 +54,7 @@ if authentication_status:
     
     st.sidebar.image('index.png', width=150)
     
-    st.sidebar.title(f"Bem-vindo, {name}")
+    st.sidebar.title(f"Bem-vindo(a), {name}")
     
     
     conn = st.connection("gsheets", type=GSheetsConnection)
