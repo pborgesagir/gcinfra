@@ -192,7 +192,18 @@ if authentication_status:
     
     
     
-    
+     # Function to convert currency strings to float
+    def currency_to_float(currency):
+        if isinstance(currency, str):
+            # Remove non-numeric characters and convert to float
+            return float(re.sub(r'[^\d.]', '', currency))
+        elif isinstance(currency, (int, float)):
+            # If it's already a number, return it as is
+            return float(currency)
+        else:
+            # Handle other types if necessary
+            return None  # You can modify this part based on your specific requirements
+
     
     
     
