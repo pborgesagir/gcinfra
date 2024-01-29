@@ -192,15 +192,10 @@ if authentication_status:
     
     
     
-    def brazilian_currency_to_float(currency):
+    # Function to convert currency strings to float
+    def currency_to_float(currency):
         if isinstance(currency, str):
-            # Replace the Brazilian thousands separator (.) with an empty string
-            currency = currency.replace('.', '')
-            
-            # Replace the Brazilian decimal separator (,) with a dot (.) for proper conversion
-            currency = currency.replace(',', '.')
-    
-            # Remove any remaining non-numeric characters and convert to float
+            # Remove non-numeric characters and convert to float
             return float(re.sub(r'[^\d.]', '', currency))
         elif isinstance(currency, (int, float)):
             # If it's already a number, return it as is
@@ -208,6 +203,7 @@ if authentication_status:
         else:
             # Handle other types if necessary
             return None  # You can modify this part based on your specific requirements
+
 
     
     
